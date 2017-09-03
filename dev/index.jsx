@@ -11,6 +11,7 @@ class App extends Component {
     super(props);
     this.state = {
       name: '',
+      msg: '',
       date: '',
       passphrase: ''
     }
@@ -24,8 +25,13 @@ class App extends Component {
       name: event.target.value
     });
   }
-  handleMessage(msg){
 
+  handleMessage(msg){
+    console.log("the msg is ", msg);
+
+    this.setState({
+      msg
+    });
   }
   
   handleDate(date){
@@ -48,7 +54,15 @@ class App extends Component {
         <form>
           <Input type='text' label='Name' name='name' value={this.state.name} onChange=  {this.handleName} />
   
-          <Input type='text' label='Message' name='message' required={true} value=  {this.state.name} onChange={this.handleMessage} maxLength={120} />
+          <Input 
+            type='text' 
+            label='Message' 
+            name='message' 
+            required={true}
+            multiline={true} 
+            value={this.state.msg} 
+            onChange={this.handleMessage} 
+            maxLength={120} />
   
           <DatePicker
             required={true}

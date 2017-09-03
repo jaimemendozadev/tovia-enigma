@@ -13889,6 +13889,7 @@ var App = function (_Component) {
 
     _this.state = {
       name: '',
+      msg: '',
       date: '',
       passphrase: ''
     };
@@ -13907,7 +13908,13 @@ var App = function (_Component) {
     }
   }, {
     key: 'handleMessage',
-    value: function handleMessage(msg) {}
+    value: function handleMessage(msg) {
+      console.log("the msg is ", msg);
+
+      this.setState({
+        msg: msg
+      });
+    }
   }, {
     key: 'handleDate',
     value: function handleDate(date) {
@@ -13934,7 +13941,15 @@ var App = function (_Component) {
           'form',
           null,
           _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.name, onChange: this.handleName }),
-          _react2.default.createElement(_input2.default, { type: 'text', label: 'Message', name: 'message', required: true, value: this.state.name, onChange: this.handleMessage, maxLength: 120 }),
+          _react2.default.createElement(_input2.default, {
+            type: 'text',
+            label: 'Message',
+            name: 'message',
+            required: true,
+            multiline: true,
+            value: this.state.msg,
+            onChange: this.handleMessage,
+            maxLength: 120 }),
           _react2.default.createElement(_date_picker2.default, {
             required: true,
             label: 'Expiration Date',
