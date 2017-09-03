@@ -2,9 +2,19 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.container {
+  
+  width: 500px;
+  
+}
+
 form {
   width: 430px;
-  margin: 0 auto;
+  margin: 2em auto;
   padding: 1em;
   border: 1px solid grey;
 }
+
+
+
+
