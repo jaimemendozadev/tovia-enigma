@@ -26,7 +26,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-toolbox": "^2.0.0-beta.12",
-    "style-loader": "^0.18.2"
+    "style-loader": "^0.18.2",
+    "svg-url-loader": "^2.1.1"
   },
   "babel": {
     "presets": [

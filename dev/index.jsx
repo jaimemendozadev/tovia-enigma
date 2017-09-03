@@ -4,38 +4,43 @@ import Input from 'react-toolbox/lib/input';
 import DatePicker from 'react-toolbox/lib/date_picker';
 import styles from "../public/styles.css";
 
-
-
-
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      name: ''
+      name: '',
+      date: '',
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.handleName = this.handleName.bind(this);
+    this.handleDate = this.handleDate.bind(this);
   }
 
-  handleChange(event){
+  handleName(event){
     this.setState({
       name: event.target.value
+    });
+  }
+  
+  handleDate(date){
+    console.log("the something is ", JSON.stringify(date));
+    this.setState({
+      date
     });
   }
 
   render(){
     return (
       <form>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange} />
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleName} />
 
-        <Input type='text' label='Message' name='message' required='true' value={this.state.name} maxLength={120} />
+        <Input type='text' label='Message' name='message' required={true} value={this.state.name} maxLength={120} />
 
         <DatePicker
-          label='Formatted Date'
-          autoOk
-          inputFormat={(value) => `${value.getDate()}/${value.getMonth() + 1}/${value.getFullYear()}`}
-          onChange={this.handleChange.bind(this, 'date3')}
-          value={this.state.date3}
+          required={true}
+          label='Expiration Date'
           sundayFirstDayOfWeek
+          onChange={this.handleDate}
+          value={this.state.date}
         />
         
       </form>
