@@ -49,14 +49,19 @@ class App extends Component {
     if (this.state.encrypted.length == 0){
       console.log("making axios post");
       var msgToEncrypt = {
-        passphrase: this.state.passphrase,
         date: parseDate(this.state.date),
         unencrypted: this.state.unencrypted
       }
+      var passphrase = this.state.passphrase;
 
-      axios.post('http://localhost:3000/api/encrypt', msgToEncrypt)
+      console.log("the passphrase is ", passphrase);
+
+      axios.post(`http://localhost:3000/api/encrypt/${passphrase}`, msgToEncrypt)
         .then(res => {
           console.log(res);
+          this.setState({
+            encrypted: res.data
+          });
         })
         .catch(err => {
           console.log(err);
