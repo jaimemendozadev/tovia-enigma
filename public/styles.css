@@ -9,10 +9,14 @@
 }
 
 form {
-  width: 430px;
+  width: 370px;
   margin: 2em auto;
   padding: 1em;
   border: 1px solid grey;
+}
+
+.btn-container{
+  margin-top: 2.5em;
 }
 
 

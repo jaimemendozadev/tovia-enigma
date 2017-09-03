@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
 import DatePicker from 'react-toolbox/lib/date_picker';
-import styles from "../public/styles.css";
+import {Button} from 'react-toolbox/lib/button';
+import styles from '../public/styles.css';
+import axios from 'axios';
+import ShowDialog from './ShowDialog.jsx';
 const {generatePassphrase} = require('./utils.js');
 
 class App extends Component {
@@ -18,6 +21,7 @@ class App extends Component {
     this.handleName = this.handleName.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.checkEncrypt = this.checkEncrypt.bind(this);
   }
 
   handleName(event){
@@ -40,6 +44,20 @@ class App extends Component {
     this.setState({
       date: parsedDate
     });
+  }
+
+  checkEncrypt(){
+    console.log("Inside checkEncrypt")
+    if (this.state.msg.length == 0){
+      console.log("making axios post");
+      axios.post('http://localhost:3000/api/encrypt', {"msg": "greetings from frontend"})
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   }
 
   componentDidMount() {
@@ -71,6 +89,10 @@ class App extends Component {
             onChange={this.handleDate}
             value={this.state.date}
           />
+          <div className="btn-container">
+            <Button onClick={this.checkEncrypt} label="ENCRYPT" />
+            <Button label="DECRYPT" />
+          </div>
           
         </form>
    
