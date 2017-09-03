@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Layout} from 'react-toolbox';
 import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
 import DatePicker from 'react-toolbox/lib/date_picker';
 import styles from "../public/styles.css";
-
+const {generatePassphrase} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -13,8 +12,10 @@ class App extends Component {
     this.state = {
       name: '',
       date: '',
+      passphrase: ''
     }
     this.handleName = this.handleName.bind(this);
+    this.handleMessage = this.handleMessage.bind(this);
     this.handleDate = this.handleDate.bind(this);
   }
 
@@ -23,11 +24,21 @@ class App extends Component {
       name: event.target.value
     });
   }
+  handleMessage(msg){
+
+  }
   
   handleDate(date){
-    console.log("the something is ", JSON.stringify(date));
+    var parsedDate = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
+    console.log("parsedDate is ", parsedDate);
     this.setState({
-      date
+      date: parsedDate
+    });
+  }
+
+  componentDidMount() {
+    this.setState({
+      passphrase: generatePassphrase()
     });
   }
 
@@ -37,7 +48,7 @@ class App extends Component {
         <form>
           <Input type='text' label='Name' name='name' value={this.state.name} onChange=  {this.handleName} />
   
-          <Input type='text' label='Message' name='message' required={true} value=  {this.state.name} maxLength={120} />
+          <Input type='text' label='Message' name='message' required={true} value=  {this.state.name} onChange={this.handleMessage} maxLength={120} />
   
           <DatePicker
             required={true}
@@ -50,7 +61,7 @@ class App extends Component {
         </form>
    
         <nav>
-          <Link href="#" label="Your passphrase - 54fjy" />
+          <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
           <Link href="#" label="Generate new Passphrase" />
         </nav>
 
