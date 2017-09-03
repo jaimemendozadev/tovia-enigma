@@ -13887,7 +13887,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _require = __webpack_require__(510),
-    generatePassphrase = _require.generatePassphrase;
+    generatePassphrase = _require.generatePassphrase,
+    parseDate = _require.parseDate;
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -13899,7 +13900,8 @@ var App = function (_Component) {
 
     _this.state = {
       name: '',
-      msg: '',
+      unencrypted: '',
+      encrypted: '',
       date: '',
       passphrase: ''
     };
@@ -13914,34 +13916,37 @@ var App = function (_Component) {
     key: 'handleName',
     value: function handleName(event) {
       this.setState({
-        name: event.target.value
+        name: event
       });
     }
   }, {
     key: 'handleMessage',
     value: function handleMessage(msg) {
       console.log("the msg is ", msg);
-
       this.setState({
-        msg: msg
+        unencrypted: msg
       });
     }
   }, {
     key: 'handleDate',
     value: function handleDate(date) {
-      var parsedDate = date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear();
-      console.log("parsedDate is ", parsedDate);
       this.setState({
-        date: parsedDate
+        date: date
       });
     }
   }, {
     key: 'checkEncrypt',
     value: function checkEncrypt() {
       console.log("Inside checkEncrypt");
-      if (this.state.msg.length == 0) {
+      if (this.state.encrypted.length == 0) {
         console.log("making axios post");
-        _axios2.default.post('http://localhost:3000/api/encrypt', { "msg": "greetings from frontend" }).then(function (res) {
+        var msgToEncrypt = {
+          passphrase: this.state.passphrase,
+          date: parseDate(this.state.date),
+          unencrypted: this.state.unencrypted
+        };
+
+        _axios2.default.post('http://localhost:3000/api/encrypt', msgToEncrypt).then(function (res) {
           console.log(res);
         }).catch(function (err) {
           console.log(err);
@@ -13971,7 +13976,7 @@ var App = function (_Component) {
             name: 'message',
             required: true,
             multiline: true,
-            value: this.state.msg,
+            value: this.state.unencrypted,
             onChange: this.handleMessage,
             maxLength: 120 }),
           _react2.default.createElement(_date_picker2.default, {
@@ -30370,8 +30375,16 @@ var generatePassphrase = function generatePassphrase() {
   return text;
 };
 
+var parseDate = function parseDate(date) {
+  var parsedDate = date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear();
+  console.log('parsedDate is ', parsedDate);
+
+  return parsedDate;
+};
+
 module.exports = {
-  generatePassphrase: generatePassphrase
+  generatePassphrase: generatePassphrase,
+  parseDate: parseDate
 };
 
 /***/ }),

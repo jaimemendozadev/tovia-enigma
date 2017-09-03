@@ -7,14 +7,15 @@ import {Button} from 'react-toolbox/lib/button';
 import styles from '../public/styles.css';
 import axios from 'axios';
 import ShowDialog from './ShowDialog.jsx';
-const {generatePassphrase} = require('./utils.js');
+const {generatePassphrase, parseDate} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       name: '',
-      msg: '',
+      unencrypted: '',
+      encrypted: '',
       date: '',
       passphrase: ''
     }
@@ -26,31 +27,34 @@ class App extends Component {
 
   handleName(event){
     this.setState({
-      name: event.target.value
+      name: event
     });
   }
 
   handleMessage(msg){
     console.log("the msg is ", msg);
-
     this.setState({
-      msg
+      unencrypted: msg
     });
   }
   
   handleDate(date){
-    var parsedDate = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
-    console.log("parsedDate is ", parsedDate);
     this.setState({
-      date: parsedDate
+      date: date
     });
   }
 
   checkEncrypt(){
     console.log("Inside checkEncrypt")
-    if (this.state.msg.length == 0){
+    if (this.state.encrypted.length == 0){
       console.log("making axios post");
-      axios.post('http://localhost:3000/api/encrypt', {"msg": "greetings from frontend"})
+      var msgToEncrypt = {
+        passphrase: this.state.passphrase,
+        date: parseDate(this.state.date),
+        unencrypted: this.state.unencrypted
+      }
+
+      axios.post('http://localhost:3000/api/encrypt', msgToEncrypt)
         .then(res => {
           console.log(res);
         })
@@ -77,8 +81,8 @@ class App extends Component {
             label='Message' 
             name='message' 
             required={true}
-            multiline={true} 
-            value={this.state.msg} 
+            multiline 
+            value={this.state.unencrypted} 
             onChange={this.handleMessage} 
             maxLength={120} />
   
