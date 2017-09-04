@@ -61,6 +61,10 @@ function createNewPassphrase(event) {
   });
 }
 
+function displayMsg(string) {
+  let stringLength = string.length;
+}
+
 
 module.exports = {
   generatePassphrase,

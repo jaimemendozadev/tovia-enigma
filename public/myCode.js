@@ -14704,13 +14704,21 @@ var App = function (_Component) {
           _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
           _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
         ),
-        _react2.default.createElement(_dialog2.default, {
-          actions: actions,
-          active: this.state.active,
-          onEscKeyDown: this.handleToggle,
-          onOverlayClick: this.handleToggle,
-          title: 'DE/ENCRYPT'
-        })
+        _react2.default.createElement(
+          _dialog2.default,
+          {
+            actions: actions,
+            active: this.state.active,
+            onEscKeyDown: this.handleToggle,
+            onOverlayClick: this.handleToggle,
+            title: 'DE/ENCRYPT'
+          },
+          _react2.default.createElement(
+            'p',
+            null,
+            this.state.encrypted
+          )
+        )
       );
     }
   }]);
@@ -31751,6 +31759,10 @@ function createNewPassphrase(event) {
   this.setState({
     passphrase: generatePassphrase()
   });
+}
+
+function displayMsg(string) {
+  var stringLength = string.length;
 }
 
 module.exports = {

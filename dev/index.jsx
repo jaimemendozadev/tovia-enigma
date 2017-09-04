@@ -103,7 +103,10 @@ class App extends Component {
           onEscKeyDown={this.handleToggle}
           onOverlayClick={this.handleToggle}
           title="DE/ENCRYPT"
-        />
+        >
+          <p>{this.state.encrypted}</p>
+
+        </Dialog>
 
       </div>
     )
