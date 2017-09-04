@@ -14641,15 +14641,12 @@ var App = function (_Component) {
       showDialog: '',
       showSnackbar: false
     };
-    _this.handleSender = handleSender.bind(_this);
-    _this.handleMessage = handleMessage.bind(_this);
-    _this.handleDate = handleDate.bind(_this);
+
     _this.handleEncrypt = _this.handleEncrypt.bind(_this);
     _this.postMsg = postMsg.bind(_this);
 
-    _this.createNewPassphrase = createNewPassphrase.bind(_this);
-    _this.handleClose = handleClose.bind(_this);
-    _this.decryptMsg = decryptMsg.bind(_this);
+    //this.handleClose = handleClose.bind(this);
+    //this.decryptMsg = decryptMsg.bind(this);
     _this.handleDialogInput = handleDialogInput.bind(_this);
     _this.handleSnackbarTimeout = handleSnackbarTimeout.bind(_this);
     return _this;
@@ -14664,7 +14661,8 @@ var App = function (_Component) {
         });
         return;
       }
-
+      //if we don't have an encrypted msg in state from DB
+      //create msg to send to DB for encryption
       if (this.state.encrypted.length == 0) {
 
         var msgToEncrypt = {
@@ -14676,6 +14674,8 @@ var App = function (_Component) {
 
         this.postMsg(passphrase, msgToEncrypt);
       } else {
+        //we do have an encrypted message from server/DB
+        //display in dialog box
         var showDialog = this.state.encrypted;
         this.setState({
           active: !this.state.active,
@@ -14694,7 +14694,7 @@ var App = function (_Component) {
     key: 'render',
     value: function render() {
       //actions for Dialog buttons
-      var actions = [{ label: 'CLOSE', onClick: this.handleClose }, { label: 'DECRYPT', onClick: this.decryptMsg }];
+      var actions = [{ label: 'CLOSE', onClick: handleClose.bind(this) }, { label: 'DECRYPT', onClick: decryptMsg.bind(this) }];
 
       return _react2.default.createElement(
         'div',
@@ -14710,7 +14710,7 @@ var App = function (_Component) {
               { className: 'avatar' },
               _react2.default.createElement('img', { src: 'https://placeimg.com/80/80/animals' })
             ),
-            _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: this.handleSender })
+            _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: handleSender.bind(this) })
           ),
           _react2.default.createElement(_input2.default, {
             type: 'text',
@@ -14719,13 +14719,13 @@ var App = function (_Component) {
             required: true,
             multiline: true,
             value: this.state.unencrypted,
-            onChange: this.handleMessage,
+            onChange: handleMessage.bind(this),
             maxLength: 120 }),
           _react2.default.createElement(_date_picker2.default, {
             required: true,
             label: 'Expiration Date',
             sundayFirstDayOfWeek: true,
-            onChange: this.handleDate,
+            onChange: handleDate.bind(this),
             value: this.state.date
           }),
           _react2.default.createElement(
@@ -14739,7 +14739,7 @@ var App = function (_Component) {
           'div',
           { className: 'btn-container' },
           _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
-          _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
+          _react2.default.createElement(_link2.default, { onClick: createNewPassphrase.bind(this), href: '#', label: 'Generate new Passphrase' })
         ),
         _react2.default.createElement(
           _dialog2.default,
@@ -31788,7 +31788,7 @@ function postMsg(passphrase, msgToEncrypt) {
   var _this = this;
 
   _axios2.default.post(url + '/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
-    console.log('Response after posting unencrypted msg to server', res);
+    console.log('Msg successfully encrypted', res);
     _this.setState({
       encrypted: res.data
     });
@@ -31815,8 +31815,10 @@ function decryptMsg() {
   var msgToDecrypt = this.state.showDialog;
   var passphrase = this.state.passphrase;
 
+  console.log('msgToDecrypt is ' + msgToDecrypt + ' and passphrase is ' + passphrase);
+
   _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
-    console.log('Response after posting encrypted msg to server', res);
+    console.log('Msg successfully decrypted', res);
 
     // this.setState({
     //   sender: ,

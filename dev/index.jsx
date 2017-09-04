@@ -24,15 +24,14 @@ class App extends Component {
       showDialog: '',
       showSnackbar: false
     }
-    this.handleSender = handleSender.bind(this);
-    this.handleMessage = handleMessage.bind(this);
-    this.handleDate = handleDate.bind(this);
+    
+    
     this.handleEncrypt = this.handleEncrypt.bind(this);
     this.postMsg = postMsg.bind(this);
 
-    this.createNewPassphrase = createNewPassphrase.bind(this);
-    this.handleClose = handleClose.bind(this);
-    this.decryptMsg = decryptMsg.bind(this);
+    
+    //this.handleClose = handleClose.bind(this);
+    //this.decryptMsg = decryptMsg.bind(this);
     this.handleDialogInput = handleDialogInput.bind(this);
     this.handleSnackbarTimeout = handleSnackbarTimeout.bind(this);
   }
@@ -45,7 +44,8 @@ class App extends Component {
       return;
       
     }
-    
+    //if we don't have an encrypted msg in state from DB
+    //create msg to send to DB for encryption
     if (this.state.encrypted.length == 0){
 
       var msgToEncrypt = {
@@ -58,6 +58,8 @@ class App extends Component {
       this.postMsg(passphrase, msgToEncrypt);
 
     } else {
+      //we do have an encrypted message from server/DB
+      //display in dialog box
       const showDialog = this.state.encrypted;  
       this.setState({
         active: !this.state.active,
@@ -75,8 +77,8 @@ class App extends Component {
   render(){
     //actions for Dialog buttons
     const actions = [
-      { label: 'CLOSE', onClick: this.handleClose },
-      { label: 'DECRYPT', onClick: this.decryptMsg },
+      { label: 'CLOSE', onClick: handleClose.bind(this) },
+      { label: 'DECRYPT', onClick: decryptMsg.bind(this) },
     ];
 
     return (
@@ -85,7 +87,7 @@ class App extends Component {
 
           <div className="avatar-container">
           <Avatar className="avatar"><img src="https://placeimg.com/80/80/animals"/></Avatar>
-          <Input type='text' label='Name' name='name' value={this.state.sender} onChange={this.handleSender} />
+          <Input type='text' label='Name' name='name' value={this.state.sender} onChange={handleSender.bind(this)} />
           </div>
   
           <Input 
@@ -95,14 +97,14 @@ class App extends Component {
             required={true}
             multiline 
             value={this.state.unencrypted} 
-            onChange={this.handleMessage} 
+            onChange={handleMessage.bind(this)} 
             maxLength={120} />
   
           <DatePicker
             required
             label='Expiration Date'
             sundayFirstDayOfWeek
-            onChange={this.handleDate}
+            onChange={handleDate.bind(this)}
             value={this.state.date}
           />
           <div className="btn-container">
@@ -117,7 +119,7 @@ class App extends Component {
         <div className="btn-container">
 
           <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
-          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
+          <Link onClick={createNewPassphrase.bind(this)} href="#" label="Generate new Passphrase" />
 
         </div>
 

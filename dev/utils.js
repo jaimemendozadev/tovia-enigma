@@ -46,7 +46,7 @@ function handleDate(date) {
 function postMsg(passphrase, msgToEncrypt) {
   axios.post(`${url}/encrypt/${passphrase}`, msgToEncrypt)
     .then((res) => {
-      console.log('Response after posting unencrypted msg to server', res);
+      console.log('Msg successfully encrypted', res);
       this.setState({
         encrypted: res.data,
       });
@@ -74,10 +74,12 @@ function decryptMsg() {
   const msgToDecrypt = this.state.showDialog;
   const passphrase = this.state.passphrase;
 
+  console.log(`msgToDecrypt is ${msgToDecrypt} and passphrase is ${passphrase}`);
+
 
   axios.post(`${url}/decrypt/${passphrase}`, { msgToDecrypt })
     .then((res) => {
-      console.log('Response after posting encrypted msg to server', res);
+      console.log('Msg successfully decrypted', res);
 
       // this.setState({
       //   sender: ,

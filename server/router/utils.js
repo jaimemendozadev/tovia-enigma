@@ -3,12 +3,6 @@ const inMemoryDB = require('../db/index.js');
 const moment = require('moment');
 
 
-const parseDate = (date) => {
-  const parsedDate = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
-  return parsedDate;
-};
-
-
 const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
   inMemoryDB.currentPassphrase = passphrase;
 
@@ -44,6 +38,9 @@ const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
   let msgFound = false;
 
   availableMsgs.forEach((msg) => {
+    console.log('msg is ', msg);
+    console.log(`msgToDecrypt is ${msgToDecrypt}`);
+
     if (msg.encrypted === msgToDecrypt) {
       msgFound = msg;
     }
@@ -51,15 +48,19 @@ const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
 
   const notExpired = moment(currentDate).isBefore(msgFound.date);
 
+  console.log('The msgFound in DB is ', msgFound);
   console.log('Not expired is ', notExpired);
 
   if (msgFound !== false && notExpired === true) {
     const bytes = CryptoJS.AES.decrypt(msgToDecrypt.toString(), passphrase);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-    msgFound.encrypted = decrypted;
+    const msgResponse = {};
+    msgResponse.sender = msgFound.sender;
+    msgResponse.date = msgFound.date;
+    msgResponse.encrypted = decrypted;
 
-    return msgFound;
+    return msgResponse;
   } else if (msgFound !== false && notExpired === false) {
     return 'Sorry, your message has expired and is no longer available to decrypt.';
   }
@@ -67,7 +68,6 @@ const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
 };
 
 module.exports = {
-  parseDate,
   encryptAndSave,
   retrieveAndDecrypt,
 };
