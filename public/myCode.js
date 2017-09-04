@@ -31729,7 +31729,6 @@ var capitalize = function capitalize() {
 
   text += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
 
-  console.log('The capital letter is ', text);
   return text;
 };
 
@@ -31785,21 +31784,7 @@ function postMsg(passphrase, msgToEncrypt) {
 
 function handleClose() {
   console.log('resetting the state after closing dialog');
-  // if I close the dialog box
-  // how do I get the app to make another post request
-  // using the same hashcode
 
-  /*
-    this.state = {
-      sender: '',
-      unencrypted: '',
-      encrypted: '',
-      date: '',
-      passphrase: '',
-      active: false,
-      showDialog: ''
-    }
-   */
   this.setState({
     sender: '',
     unencrypted: '',
@@ -31814,20 +31799,18 @@ function decryptMsg() {
   console.log('inside handleDecrypt!');
   var msgToDecrypt = this.state.showDialog;
   var passphrase = this.state.passphrase;
-  /*
-  axios.get(`${url}/decrypt/${passphrase}`, msgToEncrypt)
-    .then((res) => {
-      console.log(res);
-      this.setState({
-        sender: ,
-        date: ,
-        unencrypted: 
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  */
+
+  _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
+    console.log(res);
+
+    // this.setState({
+    //   sender: ,
+    //   date: ,
+    //   unencrypted: 
+    // });
+  }).catch(function (err) {
+    console.log(err);
+  });
 }
 
 function handleDialogInput(dialog) {

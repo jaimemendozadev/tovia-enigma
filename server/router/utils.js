@@ -32,7 +32,7 @@ const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
 };
 
 
-const retrieveAndDecrypt = (date, msgToDecrypt, passphrase) => {
+const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
   let currentDate = new Date();
   currentDate = parseDate(currentDate);
 
@@ -43,11 +43,11 @@ const retrieveAndDecrypt = (date, msgToDecrypt, passphrase) => {
 
   availableMsgs.map((msg) => {
     if (msg.encrypted === msgToDecrypt) {
-      msgFound = true;
+      msgFound = msg;
     }
   });
 
-  if (msgFound === true) {
+  if (msgFound !== false && msgFound) {
     const bytes = CryptoJS.AES.decrypt(msgToDecrypt.toString(), passphrase);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
   }

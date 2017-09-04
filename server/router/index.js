@@ -12,13 +12,11 @@ router.post('/encrypt/:passphrase', (req, res) => {
   res.send(encrypted);
 });
 
-router.get('/decrypt/:passphrase', (req, res) => {
-  const date = req.body.date;
-
-  const msgToDecrypt = req.body.encryptedMsg;
+router.post('/decrypt/:passphrase', (req, res) => {
+  const msgToDecrypt = req.body.msgToDecrypt;
   const passphrase = req.params.passphrase;
 
-  const decrypted = retrieveAndDecrypt(date, msgToDecrypt, passphrase);
+  const decrypted = retrieveAndDecrypt(msgToDecrypt, passphrase);
 
 
   res.send(decrypted);
