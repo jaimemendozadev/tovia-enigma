@@ -14579,6 +14579,10 @@ var _date_picker2 = _interopRequireDefault(_date_picker);
 
 var _button = __webpack_require__(66);
 
+var _dialog = __webpack_require__(119);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
 var _styles = __webpack_require__(284);
 
 var _styles2 = _interopRequireDefault(_styles);
@@ -14617,7 +14621,7 @@ var App = function (_Component) {
       encrypted: '',
       date: '',
       passphrase: '',
-      toggle: false
+      active: false
     };
     _this.handleSender = _this.handleSender.bind(_this);
     _this.handleMessage = _this.handleMessage.bind(_this);
@@ -14672,9 +14676,11 @@ var App = function (_Component) {
         }).catch(function (err) {
           console.log(err);
         });
+      } else {
+        this.setState({
+          active: !this.state.active
+        });
       }
-      console.log(_ShowDialog2.default);
-      return _react2.default.createElement(_ShowDialog2.default, { toggle: this.state.toggle });
     }
   }, {
     key: 'createNewPassphrase',
@@ -14694,6 +14700,8 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleToggle }];
+
       return _react2.default.createElement(
         'div',
         { className: 'container' },
@@ -14729,7 +14737,14 @@ var App = function (_Component) {
           null,
           _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
           _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
-        )
+        ),
+        _react2.default.createElement(_dialog2.default, {
+          actions: actions,
+          active: this.state.active,
+          onEscKeyDown: this.handleToggle,
+          onOverlayClick: this.handleToggle,
+          title: 'My awesome dialog'
+        })
       );
     }
   }]);
@@ -31756,7 +31771,6 @@ var ShowDialog = function (_Component) {
     key: 'render',
     value: function render() {
       var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleToggle }];
-      console.log('inside dialog');
       return _react2.default.createElement(_dialog2.default, {
         actions: actions,
         active: this.state.active,

@@ -4,6 +4,7 @@ import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
 import DatePicker from 'react-toolbox/lib/date_picker';
 import {Button} from 'react-toolbox/lib/button';
+import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
 import ShowDialog from './ShowDialog.jsx';
@@ -18,7 +19,7 @@ class App extends Component {
       encrypted: '',
       date: '',
       passphrase: '',
-      toggle: false
+      active: false
     }
     this.handleSender = this.handleSender.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
@@ -68,12 +69,12 @@ class App extends Component {
         .catch(err => {
           console.log(err);
         })
-    } 
-    console.log(ShowDialog)
-    return (
-      
-      <ShowDialog toggle={this.state.toggle} />
-    )
+    } else {
+      this.setState({
+        active: !this.state.active
+      });
+    }
+    
     
   }
 
@@ -93,6 +94,11 @@ class App extends Component {
   
 
   render(){
+    const actions = [
+      { label: 'CLOSE', onClick: this.handleToggle },
+      { label: 'DECRYPT', onClick: this.handleToggle },
+    ];
+    
     return (
       <div className="container">
         <form>
@@ -126,6 +132,13 @@ class App extends Component {
           <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
           <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
         </nav>
+        <Dialog
+          actions={actions}
+          active={this.state.active}
+          onEscKeyDown={this.handleToggle}
+          onOverlayClick={this.handleToggle}
+          title="My awesome dialog"
+        />
 
       </div>
     )

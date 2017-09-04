@@ -23,7 +23,6 @@ class ShowDialog extends Component {
       { label: 'CLOSE', onClick: this.handleToggle },
       { label: 'DECRYPT', onClick: this.handleToggle },
     ];
-    console.log('inside dialog');
     return (
 
       <Dialog
