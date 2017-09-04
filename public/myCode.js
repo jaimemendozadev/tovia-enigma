@@ -14712,12 +14712,7 @@ var App = function (_Component) {
             _react2.default.createElement(_button.Button, { label: 'DECRYPT' })
           )
         ),
-        _react2.default.createElement(
-          'nav',
-          null,
-          _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
-          _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
-        ),
+        _react2.default.createElement('nav', null),
         _react2.default.createElement(
           _dialog2.default,
           {

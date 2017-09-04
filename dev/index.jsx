@@ -98,8 +98,10 @@ class App extends Component {
         </form>
    
         <nav>
-          <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
-          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
+
+          {/* <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
+          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" /> */}
+
         </nav>
 
 
