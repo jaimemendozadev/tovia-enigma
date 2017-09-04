@@ -43,6 +43,7 @@ function handleDate(date) {
   });
 }
 
+
 function postMsg(passphrase, msgToEncrypt) {
   axios.post(`${url}/encrypt/${passphrase}`, msgToEncrypt)
     .then((res) => {
@@ -54,6 +55,38 @@ function postMsg(passphrase, msgToEncrypt) {
     .catch((err) => {
       console.log(err);
     });
+}
+
+
+function handleEncrypt() {
+  if (this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0) {
+    this.setState({
+      showSnackbar: true,
+    });
+    return;
+  }
+  // if we don't have an encrypted msg in state from DB
+  // create msg to send to DB for encryption
+  if (this.state.encrypted.length == 0) {
+    const msgToEncrypt = {
+      sender: this.state.sender,
+      date: this.state.date,
+      unencrypted: this.state.unencrypted,
+    };
+    const passphrase = this.state.passphrase;
+
+    console.log('expiration date is ', this.state.date);
+
+    postMsg.call(this, passphrase, msgToEncrypt);
+  } else {
+    // we do have an encrypted message from server/DB
+    // display in dialog box
+    const showDialog = this.state.encrypted;
+    this.setState({
+      active: !this.state.active,
+      showDialog,
+    });
+  }
 }
 
 function handleClose() {
@@ -131,6 +164,7 @@ module.exports = {
   handleMessage,
   handleDate,
   postMsg,
+  handleEncrypt,
   handleClose,
   decryptMsg,
   handleDialogInput,

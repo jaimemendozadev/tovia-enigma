@@ -14617,6 +14617,7 @@ var _require = __webpack_require__(305),
     handleMessage = _require.handleMessage,
     handleDate = _require.handleDate,
     postMsg = _require.postMsg,
+    handleEncrypt = _require.handleEncrypt,
     handleClose = _require.handleClose,
     decryptMsg = _require.decryptMsg,
     handleDialogInput = _require.handleDialogInput,
@@ -14642,48 +14643,10 @@ var App = function (_Component) {
       showSnackbar: false
     };
 
-    _this.handleEncrypt = _this.handleEncrypt.bind(_this);
-    _this.postMsg = postMsg.bind(_this);
-
-    _this.handleDialogInput = handleDialogInput.bind(_this);
-    _this.handleSnackbarTimeout = handleSnackbarTimeout.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'handleEncrypt',
-    value: function handleEncrypt() {
-      if (this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0) {
-        this.setState({
-          showSnackbar: true
-        });
-        return;
-      }
-      //if we don't have an encrypted msg in state from DB
-      //create msg to send to DB for encryption
-      if (this.state.encrypted.length == 0) {
-
-        var msgToEncrypt = {
-          sender: this.state.sender,
-          date: this.state.date,
-          unencrypted: this.state.unencrypted
-        };
-        var passphrase = this.state.passphrase;
-
-        console.log("expiration date is ", this.state.date);
-
-        this.postMsg(passphrase, msgToEncrypt);
-      } else {
-        //we do have an encrypted message from server/DB
-        //display in dialog box
-        var showDialog = this.state.encrypted;
-        this.setState({
-          active: !this.state.active,
-          showDialog: showDialog
-        });
-      }
-    }
-  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.setState({
@@ -14731,7 +14694,7 @@ var App = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'btn-container' },
-            _react2.default.createElement(_button.Button, { onClick: this.handleEncrypt, label: 'ENCRYPT' }),
+            _react2.default.createElement(_button.Button, { onClick: handleEncrypt.bind(this), label: 'ENCRYPT' }),
             _react2.default.createElement(_button.Button, { label: 'DECRYPT' })
           )
         ),
@@ -14754,7 +14717,7 @@ var App = function (_Component) {
             name: 'message',
             multiline: true,
             value: this.state.showDialog,
-            onChange: this.handleDialogInput
+            onChange: handleDialogInput.bind(this)
           })
         ),
         _react2.default.createElement(
@@ -14764,7 +14727,7 @@ var App = function (_Component) {
             active: this.state.showSnackbar,
             label: 'You\'re message is missing something. Please fill out the form entirely.',
             timeout: 3500,
-            onTimeout: this.handleSnackbarTimeout
+            onTimeout: handleSnackbarTimeout.bind(this)
           })
         )
       );
@@ -31797,6 +31760,37 @@ function postMsg(passphrase, msgToEncrypt) {
   });
 }
 
+function handleEncrypt() {
+  if (this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0) {
+    this.setState({
+      showSnackbar: true
+    });
+    return;
+  }
+  // if we don't have an encrypted msg in state from DB
+  // create msg to send to DB for encryption
+  if (this.state.encrypted.length == 0) {
+    var msgToEncrypt = {
+      sender: this.state.sender,
+      date: this.state.date,
+      unencrypted: this.state.unencrypted
+    };
+    var passphrase = this.state.passphrase;
+
+    console.log('expiration date is ', this.state.date);
+
+    postMsg.call(this, passphrase, msgToEncrypt);
+  } else {
+    // we do have an encrypted message from server/DB
+    // display in dialog box
+    var showDialog = this.state.encrypted;
+    this.setState({
+      active: !this.state.active,
+      showDialog: showDialog
+    });
+  }
+}
+
 function handleClose() {
   console.log('Resetting the state after closing dialog');
 
@@ -31869,6 +31863,7 @@ module.exports = {
   handleMessage: handleMessage,
   handleDate: handleDate,
   postMsg: postMsg,
+  handleEncrypt: handleEncrypt,
   handleClose: handleClose,
   decryptMsg: decryptMsg,
   handleDialogInput: handleDialogInput,

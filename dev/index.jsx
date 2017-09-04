@@ -9,7 +9,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleClose, decryptMsg, handleDialogInput, createNewPassphrase, handleSnackbarTimeout} = require('./utils.js');
+const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleEncrypt, handleClose, decryptMsg, handleDialogInput, createNewPassphrase, handleSnackbarTimeout} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -25,47 +25,6 @@ class App extends Component {
       showSnackbar: false
     }
     
-    
-    this.handleEncrypt = this.handleEncrypt.bind(this);
-    this.postMsg = postMsg.bind(this);
-
-    
-    this.handleDialogInput = handleDialogInput.bind(this);
-    this.handleSnackbarTimeout = handleSnackbarTimeout.bind(this);
-  }
-
-  handleEncrypt(){
-    if(this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0){
-      this.setState({
-        showSnackbar: true
-      });
-      return;
-      
-    }
-    //if we don't have an encrypted msg in state from DB
-    //create msg to send to DB for encryption
-    if (this.state.encrypted.length == 0){
-
-      var msgToEncrypt = {
-        sender: this.state.sender,
-        date: this.state.date,
-        unencrypted: this.state.unencrypted
-      }
-      var passphrase = this.state.passphrase;
-
-      console.log("expiration date is ", this.state.date)
-
-      this.postMsg(passphrase, msgToEncrypt);
-
-    } else {
-      //we do have an encrypted message from server/DB
-      //display in dialog box
-      const showDialog = this.state.encrypted;  
-      this.setState({
-        active: !this.state.active,
-        showDialog
-      });
-    }
   }
 
   componentDidMount() {
@@ -108,7 +67,7 @@ class App extends Component {
             value={this.state.date}
           />
           <div className="btn-container">
-            <Button onClick={this.handleEncrypt} label="ENCRYPT" />
+            <Button onClick={handleEncrypt.bind(this)} label="ENCRYPT" />
             
             { /*MUST CREATE onClick CB FOR THIS BUTTON*/ }
             <Button label="DECRYPT" />
@@ -136,7 +95,7 @@ class App extends Component {
             name='message' 
             multiline 
             value={this.state.showDialog}
-            onChange={this.handleDialogInput} 
+            onChange={handleDialogInput.bind(this)} 
             />
 
         </Dialog>
@@ -146,7 +105,7 @@ class App extends Component {
           active={this.state.showSnackbar}
           label="You're message is missing something. Please fill out the form entirely."
           timeout={3500}
-          onTimeout={this.handleSnackbarTimeout}
+          onTimeout={handleSnackbarTimeout.bind(this)}
         />
         </section>
 
