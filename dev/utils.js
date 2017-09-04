@@ -23,7 +23,6 @@ function handleSender(event) {
 }
 
 function handleMessage(msg) {
-  console.log('the msg is ', msg);
   this.setState({
     unencrypted: msg,
   });
@@ -62,7 +61,7 @@ function createNewPassphrase(event) {
 }
 
 function displayMsg(string) {
-  let stringLength = string.length;
+  const stringLength = string.length;
 }
 
 
