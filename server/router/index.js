@@ -7,6 +7,8 @@ router.post('/encrypt/:passphrase', (req, res) => {
   const passphrase = req.params.passphrase;
   const msgToEncrypt = req.body.unencrypted;
 
+  console.log('date inside server is ', date);
+
   const encrypted = encryptAndSave(sender, date, passphrase, msgToEncrypt);
 
   console.log('Encrypted message from server is ', encrypted);

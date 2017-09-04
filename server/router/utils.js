@@ -30,7 +30,7 @@ const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
 
 const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
   const currentDate = new Date();
-  // currentDate = parseDate(currentDate);
+
 
   const availableMsgs = inMemoryDB[passphrase];
 

@@ -14645,8 +14645,6 @@ var App = function (_Component) {
     _this.handleEncrypt = _this.handleEncrypt.bind(_this);
     _this.postMsg = postMsg.bind(_this);
 
-    //this.handleClose = handleClose.bind(this);
-    //this.decryptMsg = decryptMsg.bind(this);
     _this.handleDialogInput = handleDialogInput.bind(_this);
     _this.handleSnackbarTimeout = handleSnackbarTimeout.bind(_this);
     return _this;
@@ -14671,6 +14669,8 @@ var App = function (_Component) {
           unencrypted: this.state.unencrypted
         };
         var passphrase = this.state.passphrase;
+
+        console.log("expiration date is ", this.state.date);
 
         this.postMsg(passphrase, msgToEncrypt);
       } else {
@@ -31811,6 +31811,8 @@ function handleClose() {
 }
 
 function decryptMsg() {
+  var _this2 = this;
+
   console.log('Inside handleDecrypt!');
   var msgToDecrypt = this.state.showDialog;
   var passphrase = this.state.passphrase;
@@ -31820,11 +31822,14 @@ function decryptMsg() {
   _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
     console.log('Msg successfully decrypted', res);
 
-    // this.setState({
-    //   sender: ,
-    //   date: ,
-    //   unencrypted: 
-    // });
+    console.log('date is ', new Date(res.data.date));
+
+    _this2.setState({
+      sender: res.data.sender,
+      unencrypted: res.data.encrypted,
+      date: new Date(res.data.date),
+      active: false
+    });
   }).catch(function (err) {
     console.log(err);
   });

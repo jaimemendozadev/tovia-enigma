@@ -30,8 +30,6 @@ class App extends Component {
     this.postMsg = postMsg.bind(this);
 
     
-    //this.handleClose = handleClose.bind(this);
-    //this.decryptMsg = decryptMsg.bind(this);
     this.handleDialogInput = handleDialogInput.bind(this);
     this.handleSnackbarTimeout = handleSnackbarTimeout.bind(this);
   }
@@ -54,6 +52,8 @@ class App extends Component {
         unencrypted: this.state.unencrypted
       }
       var passphrase = this.state.passphrase;
+
+      console.log("expiration date is ", this.state.date)
 
       this.postMsg(passphrase, msgToEncrypt);
 
