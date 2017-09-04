@@ -13,21 +13,23 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      name: '',
+      sender: '',
       unencrypted: '',
       encrypted: '',
       date: '',
-      passphrase: ''
+      passphrase: '',
+      toggle: false
     }
-    this.handleName = this.handleName.bind(this);
+    this.handleSender = this.handleSender.bind(this);
     this.handleMessage = this.handleMessage.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.checkEncrypt = this.checkEncrypt.bind(this);
+    this.createNewPassphrase = this.createNewPassphrase.bind(this);
   }
 
-  handleName(event){
+  handleSender(event){
     this.setState({
-      name: event
+      sender: event
     });
   }
 
@@ -45,16 +47,16 @@ class App extends Component {
   }
 
   checkEncrypt(){
-    console.log("Inside checkEncrypt")
+    console.log(`this.state.encrypted is ${this.state.encrypted}`)
     if (this.state.encrypted.length == 0){
-      console.log("making axios post");
+
       var msgToEncrypt = {
+        sender: this.state.sender,
         date: parseDate(this.state.date),
         unencrypted: this.state.unencrypted
       }
       var passphrase = this.state.passphrase;
 
-      console.log("the passphrase is ", passphrase);
 
       axios.post(`http://localhost:3000/api/encrypt/${passphrase}`, msgToEncrypt)
         .then(res => {
@@ -66,7 +68,20 @@ class App extends Component {
         .catch(err => {
           console.log(err);
         })
-    }
+    } 
+    console.log(ShowDialog)
+    return (
+      
+      <ShowDialog toggle={this.state.toggle} />
+    )
+    
+  }
+
+  createNewPassphrase(event){
+    event.preventDefault();
+    this.setState({
+      passphrase: generatePassphrase()
+    });
   }
 
   componentDidMount() {
@@ -75,11 +90,13 @@ class App extends Component {
     });
   }
 
+  
+
   render(){
     return (
       <div className="container">
         <form>
-          <Input type='text' label='Name' name='name' value={this.state.name} onChange=  {this.handleName} />
+          <Input type='text' label='Name' name='name' value={this.state.sender} onChange={this.handleSender} />
   
           <Input 
             type='text' 
@@ -107,7 +124,7 @@ class App extends Component {
    
         <nav>
           <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
-          <Link href="#" label="Generate new Passphrase" />
+          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
         </nav>
 
       </div>

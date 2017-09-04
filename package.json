@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./server/index.js",
+    "dev": "nodemon ./server/index.js",
+    "start": "node ./server/index.js",
     "build": "./node_modules/.bin/webpack -w"
   },
   "keywords": [],
@@ -27,6 +28,7 @@
     "lodash": "^4.17.4",
     "postcss-color-rebeccapurple": "^3.0.0",
     "postcss-loader": "^2.0.6",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-toolbox": "^2.0.0-beta.12",

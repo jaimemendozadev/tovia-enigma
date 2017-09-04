@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Dialog from 'react-toolbox/lib/dialog';
-
+import PropTypes from 'prop-types';
 
 class ShowDialog extends Component {
   constructor(props) {
     super(props);
+    const active = this.props.toggle;
+
     this.state = {
-      active: false,
+      active,
     };
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -21,8 +23,9 @@ class ShowDialog extends Component {
       { label: 'CLOSE', onClick: this.handleToggle },
       { label: 'DECRYPT', onClick: this.handleToggle },
     ];
-
+    console.log('inside dialog');
     return (
+
       <Dialog
         actions={actions}
         active={this.state.active}

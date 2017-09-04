@@ -14612,24 +14612,26 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      name: '',
+      sender: '',
       unencrypted: '',
       encrypted: '',
       date: '',
-      passphrase: ''
+      passphrase: '',
+      toggle: false
     };
-    _this.handleName = _this.handleName.bind(_this);
+    _this.handleSender = _this.handleSender.bind(_this);
     _this.handleMessage = _this.handleMessage.bind(_this);
     _this.handleDate = _this.handleDate.bind(_this);
     _this.checkEncrypt = _this.checkEncrypt.bind(_this);
+    _this.createNewPassphrase = _this.createNewPassphrase.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'handleName',
-    value: function handleName(event) {
+    key: 'handleSender',
+    value: function handleSender(event) {
       this.setState({
-        name: event
+        sender: event
       });
     }
   }, {
@@ -14652,16 +14654,15 @@ var App = function (_Component) {
     value: function checkEncrypt() {
       var _this2 = this;
 
-      console.log("Inside checkEncrypt");
+      console.log('this.state.encrypted is ' + this.state.encrypted);
       if (this.state.encrypted.length == 0) {
-        console.log("making axios post");
+
         var msgToEncrypt = {
+          sender: this.state.sender,
           date: parseDate(this.state.date),
           unencrypted: this.state.unencrypted
         };
         var passphrase = this.state.passphrase;
-
-        console.log("the passphrase is ", passphrase);
 
         _axios2.default.post('http://localhost:3000/api/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
           console.log(res);
@@ -14672,6 +14673,16 @@ var App = function (_Component) {
           console.log(err);
         });
       }
+      console.log(_ShowDialog2.default);
+      return _react2.default.createElement(_ShowDialog2.default, { toggle: this.state.toggle });
+    }
+  }, {
+    key: 'createNewPassphrase',
+    value: function createNewPassphrase(event) {
+      event.preventDefault();
+      this.setState({
+        passphrase: generatePassphrase()
+      });
     }
   }, {
     key: 'componentDidMount',
@@ -14689,7 +14700,7 @@ var App = function (_Component) {
         _react2.default.createElement(
           'form',
           null,
-          _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.name, onChange: this.handleName }),
+          _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: this.handleSender }),
           _react2.default.createElement(_input2.default, {
             type: 'text',
             label: 'Message',
@@ -14717,7 +14728,7 @@ var App = function (_Component) {
           'nav',
           null,
           _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
-          _react2.default.createElement(_link2.default, { href: '#', label: 'Generate new Passphrase' })
+          _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
         )
       );
     }
@@ -31707,6 +31718,10 @@ var _dialog = __webpack_require__(119);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
+var _propTypes = __webpack_require__(5);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31723,8 +31738,10 @@ var ShowDialog = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (ShowDialog.__proto__ || Object.getPrototypeOf(ShowDialog)).call(this, props));
 
+    var active = _this.props.toggle;
+
     _this.state = {
-      active: false
+      active: active
     };
     _this.handleToggle = _this.handleToggle.bind(_this);
     return _this;
@@ -31739,7 +31756,7 @@ var ShowDialog = function (_Component) {
     key: 'render',
     value: function render() {
       var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleToggle }];
-
+      console.log('inside dialog');
       return _react2.default.createElement(_dialog2.default, {
         actions: actions,
         active: this.state.active,
