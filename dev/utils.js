@@ -53,10 +53,22 @@ function handleToggle() {
   });
 }
 
+function handleDecrypt() {
+  console.log('do something!');
+}
+
+
 function createNewPassphrase(event) {
   event.preventDefault();
+  console.log('resetting the state');
   this.setState({
+    sender: '',
+    unencrypted: '',
+    encrypted: '',
+    date: '',
     passphrase: generatePassphrase(),
+    active: false,
+    showDialog: '',
   });
 }
 
@@ -73,5 +85,6 @@ module.exports = {
   handleDate,
   postMsg,
   handleToggle,
+  handleDecrypt,
   createNewPassphrase,
 };

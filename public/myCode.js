@@ -14613,6 +14613,7 @@ var _require = __webpack_require__(305),
     handleDate = _require.handleDate,
     postMsg = _require.postMsg,
     handleToggle = _require.handleToggle,
+    handleDecrypt = _require.handleDecrypt,
     createNewPassphrase = _require.createNewPassphrase;
 
 var App = function (_Component) {
@@ -14629,7 +14630,8 @@ var App = function (_Component) {
       encrypted: '',
       date: '',
       passphrase: '',
-      active: false
+      active: false,
+      showDialog: ''
     };
     _this.handleSender = handleSender.bind(_this);
     _this.handleMessage = handleMessage.bind(_this);
@@ -14639,13 +14641,14 @@ var App = function (_Component) {
 
     _this.createNewPassphrase = createNewPassphrase.bind(_this);
     _this.handleToggle = handleToggle.bind(_this);
+    _this.handleDecrypt = handleDecrypt.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
     key: 'checkEncrypt',
     value: function checkEncrypt() {
-      console.log('this.state.encrypted is ' + this.state.encrypted);
+
       if (this.state.encrypted.length == 0) {
 
         var msgToEncrypt = {
@@ -14657,8 +14660,10 @@ var App = function (_Component) {
 
         this.postMsg(passphrase, msgToEncrypt);
       } else {
+        var showDialog = this.state.encrypted;
         this.setState({
-          active: !this.state.active
+          active: !this.state.active,
+          showDialog: showDialog
         });
       }
     }
@@ -14672,7 +14677,7 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleToggle }];
+      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleDecrypt }];
 
       return _react2.default.createElement(
         'div',
@@ -14715,15 +14720,16 @@ var App = function (_Component) {
           {
             actions: actions,
             active: this.state.active,
-            onEscKeyDown: this.handleToggle,
-            onOverlayClick: this.handleToggle,
-            title: 'DE/ENCRYPT'
+            title: 'De/Encrypt'
           },
-          _react2.default.createElement(
-            'p',
-            null,
-            this.state.encrypted
-          )
+          _react2.default.createElement(_input2.default, {
+            type: 'text',
+            label: 'Message',
+            name: 'message',
+            required: true,
+            multiline: true,
+            value: this.state.showDialog
+          })
         )
       );
     }
@@ -31752,10 +31758,21 @@ function handleToggle() {
   });
 }
 
+function handleDecrypt() {
+  console.log('do something!');
+}
+
 function createNewPassphrase(event) {
   event.preventDefault();
+  console.log('resetting the state');
   this.setState({
-    passphrase: generatePassphrase()
+    sender: '',
+    unencrypted: '',
+    encrypted: '',
+    date: '',
+    passphrase: generatePassphrase(),
+    active: false,
+    showDialog: ''
   });
 }
 
@@ -31771,6 +31788,7 @@ module.exports = {
   handleDate: handleDate,
   postMsg: postMsg,
   handleToggle: handleToggle,
+  handleDecrypt: handleDecrypt,
   createNewPassphrase: createNewPassphrase
 };
 

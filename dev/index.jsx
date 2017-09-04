@@ -7,7 +7,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleToggle, createNewPassphrase} = require('./utils.js');
+const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleToggle, handleDecrypt, createNewPassphrase} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -18,7 +18,8 @@ class App extends Component {
       encrypted: '',
       date: '',
       passphrase: '',
-      active: false
+      active: false,
+      showDialog: ''
     }
     this.handleSender = handleSender.bind(this);
     this.handleMessage = handleMessage.bind(this);
@@ -28,10 +29,11 @@ class App extends Component {
 
     this.createNewPassphrase = createNewPassphrase.bind(this);
     this.handleToggle = handleToggle.bind(this);
+    this.handleDecrypt = handleDecrypt.bind(this);
   }
 
   checkEncrypt(){
-    console.log(`this.state.encrypted is ${this.state.encrypted}`)
+    
     if (this.state.encrypted.length == 0){
 
       var msgToEncrypt = {
@@ -44,8 +46,10 @@ class App extends Component {
       this.postMsg(passphrase, msgToEncrypt);
 
     } else {
+      const showDialog = this.state.encrypted;  
       this.setState({
-        active: !this.state.active
+        active: !this.state.active,
+        showDialog
       });
     }
     
@@ -60,7 +64,7 @@ class App extends Component {
   render(){
     const actions = [
       { label: 'CLOSE', onClick: this.handleToggle },
-      { label: 'DECRYPT', onClick: this.handleToggle },
+      { label: 'DECRYPT', onClick: this.handleDecrypt },
     ];
 
     return (
@@ -97,14 +101,21 @@ class App extends Component {
           <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
         </nav>
 
+
+
         <Dialog
           actions={actions}
           active={this.state.active}
-          onEscKeyDown={this.handleToggle}
-          onOverlayClick={this.handleToggle}
-          title="DE/ENCRYPT"
+          title="De/Encrypt"
         >
-          <p>{this.state.encrypted}</p>
+          <Input 
+            type='text' 
+            label='Message' 
+            name='message' 
+            required={true}
+            multiline 
+            value={this.state.showDialog} 
+            />
 
         </Dialog>
 
