@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const url = 'http://localhost:3000/api';
+
 const generatePassphrase = () => {
   let text = '';
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -35,7 +37,7 @@ function handleDate(date) {
 }
 
 function postMsg(passphrase, msgToEncrypt) {
-  axios.post(`http://localhost:3000/api/encrypt/${passphrase}`, msgToEncrypt)
+  axios.post(`${url}/encrypt/${passphrase}`, msgToEncrypt)
     .then((res) => {
       console.log(res);
       this.setState({
@@ -53,8 +55,23 @@ function handleToggle() {
   });
 }
 
-function handleDecrypt() {
-  console.log('do something!');
+function decryptMsg() {
+  console.log('inside handleDecrypt!');
+  const msgToDecrypt = this.state.showDialog;
+  const passphrase = this.state.passphrase;
+
+  axios.get(`${url}/decrypt/${passphrase}`, msgToEncrypt)
+    .then((res) => {
+      console.log(res);
+      this.setState({
+        sender: ,
+        date: ,
+        unencrypted: 
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 
@@ -85,6 +102,6 @@ module.exports = {
   handleDate,
   postMsg,
   handleToggle,
-  handleDecrypt,
+  decryptMsg,
   createNewPassphrase,
 };

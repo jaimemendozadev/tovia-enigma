@@ -7,7 +7,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleToggle, handleDecrypt, createNewPassphrase} = require('./utils.js');
+const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleToggle, decryptMsg, createNewPassphrase} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -29,7 +29,7 @@ class App extends Component {
 
     this.createNewPassphrase = createNewPassphrase.bind(this);
     this.handleToggle = handleToggle.bind(this);
-    this.handleDecrypt = handleDecrypt.bind(this);
+    this.decryptMsg = decryptMsg.bind(this);
   }
 
   checkEncrypt(){
@@ -52,7 +52,6 @@ class App extends Component {
         showDialog
       });
     }
-    
   }
 
   componentDidMount() {
@@ -62,9 +61,10 @@ class App extends Component {
   }
 
   render(){
+    //actions for Dialog buttons
     const actions = [
       { label: 'CLOSE', onClick: this.handleToggle },
-      { label: 'DECRYPT', onClick: this.handleDecrypt },
+      { label: 'DECRYPT', onClick: this.decryptMsg },
     ];
 
     return (

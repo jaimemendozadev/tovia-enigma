@@ -14613,7 +14613,7 @@ var _require = __webpack_require__(305),
     handleDate = _require.handleDate,
     postMsg = _require.postMsg,
     handleToggle = _require.handleToggle,
-    handleDecrypt = _require.handleDecrypt,
+    decryptMsg = _require.decryptMsg,
     createNewPassphrase = _require.createNewPassphrase;
 
 var App = function (_Component) {
@@ -14641,7 +14641,7 @@ var App = function (_Component) {
 
     _this.createNewPassphrase = createNewPassphrase.bind(_this);
     _this.handleToggle = handleToggle.bind(_this);
-    _this.handleDecrypt = handleDecrypt.bind(_this);
+    _this.decryptMsg = decryptMsg.bind(_this);
     return _this;
   }
 
@@ -14677,7 +14677,8 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleDecrypt }];
+      //actions for Dialog buttons
+      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.decryptMsg }];
 
       return _react2.default.createElement(
         'div',
@@ -31694,103 +31695,9 @@ module.exports = function spread(callback) {
 
 /***/ }),
 /* 305 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-var _axios = __webpack_require__(120);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var generatePassphrase = function generatePassphrase() {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < 5; i += 1) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-
-  return text;
-};
-
-var parseDate = function parseDate(date) {
-  var parsedDate = date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear();
-  return parsedDate;
-};
-
-function handleSender(event) {
-  this.setState({
-    sender: event
-  });
-}
-
-function handleMessage(msg) {
-  this.setState({
-    unencrypted: msg
-  });
-}
-
-function handleDate(date) {
-  this.setState({
-    date: date
-  });
-}
-
-function postMsg(passphrase, msgToEncrypt) {
-  var _this = this;
-
-  _axios2.default.post('http://localhost:3000/api/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
-    console.log(res);
-    _this.setState({
-      encrypted: res.data
-    });
-  }).catch(function (err) {
-    console.log(err);
-  });
-}
-
-function handleToggle() {
-  this.setState({
-    active: !this.state.active
-  });
-}
-
-function handleDecrypt() {
-  console.log('do something!');
-}
-
-function createNewPassphrase(event) {
-  event.preventDefault();
-  console.log('resetting the state');
-  this.setState({
-    sender: '',
-    unencrypted: '',
-    encrypted: '',
-    date: '',
-    passphrase: generatePassphrase(),
-    active: false,
-    showDialog: ''
-  });
-}
-
-function displayMsg(string) {
-  var stringLength = string.length;
-}
-
-module.exports = {
-  generatePassphrase: generatePassphrase,
-  parseDate: parseDate,
-  handleSender: handleSender,
-  handleMessage: handleMessage,
-  handleDate: handleDate,
-  postMsg: postMsg,
-  handleToggle: handleToggle,
-  handleDecrypt: handleDecrypt,
-  createNewPassphrase: createNewPassphrase
-};
+throw new Error("Module build failed: SyntaxError: Unexpected token (67:16)\n\n\u001b[0m \u001b[90m 65 | \u001b[39m      console\u001b[33m.\u001b[39mlog(res)\u001b[33m;\u001b[39m\n \u001b[90m 66 | \u001b[39m      \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39msetState({\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 67 | \u001b[39m        sender\u001b[33m:\u001b[39m \u001b[33m,\u001b[39m\n \u001b[90m    | \u001b[39m                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 68 | \u001b[39m        date\u001b[33m:\u001b[39m \u001b[33m,\u001b[39m\n \u001b[90m 69 | \u001b[39m        unencrypted\u001b[33m:\u001b[39m \n \u001b[90m 70 | \u001b[39m      })\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);
