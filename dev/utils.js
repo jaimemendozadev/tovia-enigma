@@ -50,6 +50,21 @@ function postMsg(passphrase, msgToEncrypt) {
 }
 
 function handleToggle() {
+  // if I close the dialog box
+  // how do I get the app to make another post request
+  // using the same hashcode
+
+  /*
+    this.state = {
+      sender: '',
+      unencrypted: '',
+      encrypted: '',
+      date: '',
+      active: false,
+      showDialog: ''
+    }
+
+  */
   this.setState({
     active: !this.state.active,
   });
@@ -59,7 +74,7 @@ function decryptMsg() {
   console.log('inside handleDecrypt!');
   const msgToDecrypt = this.state.showDialog;
   const passphrase = this.state.passphrase;
-
+  /*
   axios.get(`${url}/decrypt/${passphrase}`, msgToEncrypt)
     .then((res) => {
       console.log(res);
@@ -72,12 +87,21 @@ function decryptMsg() {
     .catch((err) => {
       console.log(err);
     });
+  */
+}
+
+function handleDialogInput(dialog) {
+  this.setState({
+    showDialog: dialog,
+  });
 }
 
 
 function createNewPassphrase(event) {
   event.preventDefault();
+
   console.log('resetting the state');
+
   this.setState({
     sender: '',
     unencrypted: '',
@@ -103,5 +127,6 @@ module.exports = {
   postMsg,
   handleToggle,
   decryptMsg,
+  handleDialogInput,
   createNewPassphrase,
 };
