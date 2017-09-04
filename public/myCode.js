@@ -14591,10 +14591,6 @@ var _axios = __webpack_require__(286);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _ShowDialog = __webpack_require__(305);
-
-var _ShowDialog2 = _interopRequireDefault(_ShowDialog);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14605,7 +14601,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _require = __webpack_require__(306),
     generatePassphrase = _require.generatePassphrase,
-    parseDate = _require.parseDate;
+    parseDate = _require.parseDate,
+    handleSender = _require.handleSender,
+    handleMessage = _require.handleMessage,
+    handleDate = _require.handleDate,
+    postMsg = _require.postMsg,
+    handleToggle = _require.handleToggle,
+    createNewPassphrase = _require.createNewPassphrase;
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -14623,41 +14625,20 @@ var App = function (_Component) {
       passphrase: '',
       active: false
     };
-    _this.handleSender = _this.handleSender.bind(_this);
-    _this.handleMessage = _this.handleMessage.bind(_this);
-    _this.handleDate = _this.handleDate.bind(_this);
+    _this.handleSender = handleSender.bind(_this);
+    _this.handleMessage = handleMessage.bind(_this);
+    _this.handleDate = handleDate.bind(_this);
     _this.checkEncrypt = _this.checkEncrypt.bind(_this);
-    _this.createNewPassphrase = _this.createNewPassphrase.bind(_this);
+    _this.postMsg = postMsg.bind(_this);
+
+    _this.createNewPassphrase = createNewPassphrase.bind(_this);
+    _this.handleToggle = handleToggle.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'handleSender',
-    value: function handleSender(event) {
-      this.setState({
-        sender: event
-      });
-    }
-  }, {
-    key: 'handleMessage',
-    value: function handleMessage(msg) {
-      console.log("the msg is ", msg);
-      this.setState({
-        unencrypted: msg
-      });
-    }
-  }, {
-    key: 'handleDate',
-    value: function handleDate(date) {
-      this.setState({
-        date: date
-      });
-    }
-  }, {
     key: 'checkEncrypt',
     value: function checkEncrypt() {
-      var _this2 = this;
-
       console.log('this.state.encrypted is ' + this.state.encrypted);
       if (this.state.encrypted.length == 0) {
 
@@ -14668,27 +14649,12 @@ var App = function (_Component) {
         };
         var passphrase = this.state.passphrase;
 
-        _axios2.default.post('http://localhost:3000/api/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
-          console.log(res);
-          _this2.setState({
-            encrypted: res.data
-          });
-        }).catch(function (err) {
-          console.log(err);
-        });
+        this.postMsg(passphrase, msgToEncrypt);
       } else {
         this.setState({
           active: !this.state.active
         });
       }
-    }
-  }, {
-    key: 'createNewPassphrase',
-    value: function createNewPassphrase(event) {
-      event.preventDefault();
-      this.setState({
-        passphrase: generatePassphrase()
-      });
     }
   }, {
     key: 'componentDidMount',
@@ -14743,7 +14709,7 @@ var App = function (_Component) {
           active: this.state.active,
           onEscKeyDown: this.handleToggle,
           onOverlayClick: this.handleToggle,
-          title: 'My awesome dialog'
+          title: 'DE/ENCRYPT'
         })
       );
     }
@@ -31713,85 +31679,18 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 305 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _dialog = __webpack_require__(119);
-
-var _dialog2 = _interopRequireDefault(_dialog);
-
-var _propTypes = __webpack_require__(5);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ShowDialog = function (_Component) {
-  _inherits(ShowDialog, _Component);
-
-  function ShowDialog(props) {
-    _classCallCheck(this, ShowDialog);
-
-    var _this = _possibleConstructorReturn(this, (ShowDialog.__proto__ || Object.getPrototypeOf(ShowDialog)).call(this, props));
-
-    var active = _this.props.toggle;
-
-    _this.state = {
-      active: active
-    };
-    _this.handleToggle = _this.handleToggle.bind(_this);
-    return _this;
-  }
-
-  _createClass(ShowDialog, [{
-    key: 'handleToggle',
-    value: function handleToggle() {
-      this.setState({ active: !this.state.active });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.handleToggle }];
-      return _react2.default.createElement(_dialog2.default, {
-        actions: actions,
-        active: this.state.active,
-        onEscKeyDown: this.handleToggle,
-        onOverlayClick: this.handleToggle,
-        title: 'My awesome dialog'
-      });
-    }
-  }]);
-
-  return ShowDialog;
-}(_react.Component);
-
-exports.default = ShowDialog;
-
-/***/ }),
+/* 305 */,
 /* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+var _axios = __webpack_require__(286);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var generatePassphrase = function generatePassphrase() {
   var text = '';
@@ -31806,14 +31705,63 @@ var generatePassphrase = function generatePassphrase() {
 
 var parseDate = function parseDate(date) {
   var parsedDate = date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear();
-  console.log('parsedDate is ', parsedDate);
-
   return parsedDate;
 };
 
+function handleSender(event) {
+  this.setState({
+    sender: event
+  });
+}
+
+function handleMessage(msg) {
+  console.log('the msg is ', msg);
+  this.setState({
+    unencrypted: msg
+  });
+}
+
+function handleDate(date) {
+  this.setState({
+    date: date
+  });
+}
+
+function postMsg(passphrase, msgToEncrypt) {
+  var _this = this;
+
+  _axios2.default.post('http://localhost:3000/api/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
+    console.log(res);
+    _this.setState({
+      encrypted: res.data
+    });
+  }).catch(function (err) {
+    console.log(err);
+  });
+}
+
+function handleToggle() {
+  this.setState({
+    active: !this.state.active
+  });
+}
+
+function createNewPassphrase(event) {
+  event.preventDefault();
+  this.setState({
+    passphrase: generatePassphrase()
+  });
+}
+
 module.exports = {
   generatePassphrase: generatePassphrase,
-  parseDate: parseDate
+  parseDate: parseDate,
+  handleSender: handleSender,
+  handleMessage: handleMessage,
+  handleDate: handleDate,
+  postMsg: postMsg,
+  handleToggle: handleToggle,
+  createNewPassphrase: createNewPassphrase
 };
 
 /***/ })

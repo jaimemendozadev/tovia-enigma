@@ -7,8 +7,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-import ShowDialog from './ShowDialog.jsx';
-const {generatePassphrase, parseDate} = require('./utils.js');
+const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleToggle, createNewPassphrase} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -21,30 +20,14 @@ class App extends Component {
       passphrase: '',
       active: false
     }
-    this.handleSender = this.handleSender.bind(this);
-    this.handleMessage = this.handleMessage.bind(this);
-    this.handleDate = this.handleDate.bind(this);
+    this.handleSender = handleSender.bind(this);
+    this.handleMessage = handleMessage.bind(this);
+    this.handleDate = handleDate.bind(this);
     this.checkEncrypt = this.checkEncrypt.bind(this);
-    this.createNewPassphrase = this.createNewPassphrase.bind(this);
-  }
+    this.postMsg = postMsg.bind(this);
 
-  handleSender(event){
-    this.setState({
-      sender: event
-    });
-  }
-
-  handleMessage(msg){
-    console.log("the msg is ", msg);
-    this.setState({
-      unencrypted: msg
-    });
-  }
-  
-  handleDate(date){
-    this.setState({
-      date: date
-    });
+    this.createNewPassphrase = createNewPassphrase.bind(this);
+    this.handleToggle = handleToggle.bind(this);
   }
 
   checkEncrypt(){
@@ -58,31 +41,14 @@ class App extends Component {
       }
       var passphrase = this.state.passphrase;
 
+      this.postMsg(passphrase, msgToEncrypt);
 
-      axios.post(`http://localhost:3000/api/encrypt/${passphrase}`, msgToEncrypt)
-        .then(res => {
-          console.log(res);
-          this.setState({
-            encrypted: res.data
-          });
-        })
-        .catch(err => {
-          console.log(err);
-        })
     } else {
       this.setState({
         active: !this.state.active
       });
     }
     
-    
-  }
-
-  createNewPassphrase(event){
-    event.preventDefault();
-    this.setState({
-      passphrase: generatePassphrase()
-    });
   }
 
   componentDidMount() {
@@ -91,14 +57,12 @@ class App extends Component {
     });
   }
 
-  
-
   render(){
     const actions = [
       { label: 'CLOSE', onClick: this.handleToggle },
       { label: 'DECRYPT', onClick: this.handleToggle },
     ];
-    
+
     return (
       <div className="container">
         <form>
@@ -132,12 +96,13 @@ class App extends Component {
           <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
           <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
         </nav>
+
         <Dialog
           actions={actions}
           active={this.state.active}
           onEscKeyDown={this.handleToggle}
           onOverlayClick={this.handleToggle}
-          title="My awesome dialog"
+          title="DE/ENCRYPT"
         />
 
       </div>
