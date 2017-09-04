@@ -10,6 +10,8 @@ const generatePassphrase = () => {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
+  console.log('The generated passphrase is ', text);
+
   return text;
 };
 
@@ -49,7 +51,8 @@ function postMsg(passphrase, msgToEncrypt) {
     });
 }
 
-function handleToggle() {
+function handleClose() {
+  console.log('resetting the state after closing dialog');
   // if I close the dialog box
   // how do I get the app to make another post request
   // using the same hashcode
@@ -60,13 +63,19 @@ function handleToggle() {
       unencrypted: '',
       encrypted: '',
       date: '',
+      passphrase: '',
       active: false,
       showDialog: ''
     }
 
   */
   this.setState({
+    sender: '',
+    unencrypted: '',
+    encrypted: '',
+    date: '',
     active: !this.state.active,
+    showDialog: '',
   });
 }
 
@@ -125,7 +134,7 @@ module.exports = {
   handleMessage,
   handleDate,
   postMsg,
-  handleToggle,
+  handleClose,
   decryptMsg,
   handleDialogInput,
   createNewPassphrase,

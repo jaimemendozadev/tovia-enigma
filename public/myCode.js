@@ -14612,7 +14612,7 @@ var _require = __webpack_require__(305),
     handleMessage = _require.handleMessage,
     handleDate = _require.handleDate,
     postMsg = _require.postMsg,
-    handleToggle = _require.handleToggle,
+    handleClose = _require.handleClose,
     decryptMsg = _require.decryptMsg,
     handleDialogInput = _require.handleDialogInput,
     createNewPassphrase = _require.createNewPassphrase;
@@ -14641,7 +14641,7 @@ var App = function (_Component) {
     _this.postMsg = postMsg.bind(_this);
 
     _this.createNewPassphrase = createNewPassphrase.bind(_this);
-    _this.handleToggle = handleToggle.bind(_this);
+    _this.handleClose = handleClose.bind(_this);
     _this.decryptMsg = decryptMsg.bind(_this);
     _this.handleDialogInput = handleDialogInput.bind(_this);
     return _this;
@@ -14680,7 +14680,7 @@ var App = function (_Component) {
     key: 'render',
     value: function render() {
       //actions for Dialog buttons
-      var actions = [{ label: 'CLOSE', onClick: this.handleToggle }, { label: 'DECRYPT', onClick: this.decryptMsg }];
+      var actions = [{ label: 'CLOSE', onClick: this.handleClose }, { label: 'DECRYPT', onClick: this.decryptMsg }];
 
       return _react2.default.createElement(
         'div',
@@ -31718,6 +31718,8 @@ var generatePassphrase = function generatePassphrase() {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
+  console.log('The generated passphrase is ', text);
+
   return text;
 };
 
@@ -31757,7 +31759,8 @@ function postMsg(passphrase, msgToEncrypt) {
   });
 }
 
-function handleToggle() {
+function handleClose() {
+  console.log('resetting the state after closing dialog');
   // if I close the dialog box
   // how do I get the app to make another post request
   // using the same hashcode
@@ -31768,12 +31771,18 @@ function handleToggle() {
       unencrypted: '',
       encrypted: '',
       date: '',
+      passphrase: '',
       active: false,
       showDialog: ''
     }
    */
   this.setState({
-    active: !this.state.active
+    sender: '',
+    unencrypted: '',
+    encrypted: '',
+    date: '',
+    active: !this.state.active,
+    showDialog: ''
   });
 }
 
@@ -31830,7 +31839,7 @@ module.exports = {
   handleMessage: handleMessage,
   handleDate: handleDate,
   postMsg: postMsg,
-  handleToggle: handleToggle,
+  handleClose: handleClose,
   decryptMsg: decryptMsg,
   handleDialogInput: handleDialogInput,
   createNewPassphrase: createNewPassphrase
