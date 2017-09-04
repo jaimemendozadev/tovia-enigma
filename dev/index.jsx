@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import {Snackbar} from 'react-toolbox'
 import Avatar from 'react-toolbox/lib/avatar';
 import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
@@ -8,7 +9,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleClose, decryptMsg, handleDialogInput, createNewPassphrase} = require('./utils.js');
+const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleClose, decryptMsg, handleDialogInput, createNewPassphrase, handleSnackbarTimeout} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -20,21 +21,30 @@ class App extends Component {
       date: '',
       passphrase: '',
       active: false,
-      showDialog: ''
+      showDialog: '',
+      showSnackbar: false
     }
     this.handleSender = handleSender.bind(this);
     this.handleMessage = handleMessage.bind(this);
     this.handleDate = handleDate.bind(this);
-    this.checkEncrypt = this.checkEncrypt.bind(this);
+    this.handleEncrypt = this.handleEncrypt.bind(this);
     this.postMsg = postMsg.bind(this);
 
     this.createNewPassphrase = createNewPassphrase.bind(this);
     this.handleClose = handleClose.bind(this);
     this.decryptMsg = decryptMsg.bind(this);
     this.handleDialogInput = handleDialogInput.bind(this);
+    this.handleSnackbarTimeout = handleSnackbarTimeout.bind(this);
   }
 
-  checkEncrypt(){
+  handleEncrypt(){
+    if(this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0){
+      this.setState({
+        showSnackbar: true
+      });
+      return;
+      
+    }
     
     if (this.state.encrypted.length == 0){
 
@@ -89,14 +99,14 @@ class App extends Component {
             maxLength={120} />
   
           <DatePicker
-            required={true}
+            required
             label='Expiration Date'
             sundayFirstDayOfWeek
             onChange={this.handleDate}
             value={this.state.date}
           />
           <div className="btn-container">
-            <Button onClick={this.checkEncrypt} label="ENCRYPT" />
+            <Button onClick={this.handleEncrypt} label="ENCRYPT" />
             
             { /*MUST CREATE onClick CB FOR THIS BUTTON*/ }
             <Button label="DECRYPT" />
@@ -128,6 +138,15 @@ class App extends Component {
             />
 
         </Dialog>
+
+        <section>
+        <Snackbar
+          active={this.state.showSnackbar}
+          label="You're message is missing something. Please fill out the form entirely."
+          timeout={3500}
+          onTimeout={this.handleSnackbarTimeout}
+        />
+        </section>
 
       </div>
     )

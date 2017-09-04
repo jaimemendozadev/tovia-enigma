@@ -113,6 +113,12 @@ function createNewPassphrase(event) {
   });
 }
 
+function handleSnackbarTimeout() {
+  this.setState({
+    showSnackbar: false,
+  });
+}
+
 module.exports = {
   generatePassphrase,
   handleSender,
@@ -123,4 +129,5 @@ module.exports = {
   decryptMsg,
   handleDialogInput,
   createNewPassphrase,
+  handleSnackbarTimeout,
 };
