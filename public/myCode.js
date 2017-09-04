@@ -14611,7 +14611,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _require = __webpack_require__(305),
     generatePassphrase = _require.generatePassphrase,
-    parseDate = _require.parseDate,
     handleSender = _require.handleSender,
     handleMessage = _require.handleMessage,
     handleDate = _require.handleDate,
@@ -14659,7 +14658,7 @@ var App = function (_Component) {
 
         var msgToEncrypt = {
           sender: this.state.sender,
-          date: parseDate(this.state.date),
+          date: this.state.date,
           unencrypted: this.state.unencrypted
         };
         var passphrase = this.state.passphrase;
@@ -31746,11 +31745,6 @@ var generatePassphrase = function generatePassphrase() {
   return text;
 };
 
-var parseDate = function parseDate(date) {
-  var parsedDate = date.getMonth() + '-' + date.getDate() + '-' + date.getFullYear();
-  return parsedDate;
-};
-
 function handleSender(event) {
   this.setState({
     sender: event
@@ -31773,7 +31767,7 @@ function postMsg(passphrase, msgToEncrypt) {
   var _this = this;
 
   _axios2.default.post(url + '/encrypt/' + passphrase, msgToEncrypt).then(function (res) {
-    console.log(res);
+    console.log('Response after posting unencrypted msg to server', res);
     _this.setState({
       encrypted: res.data
     });
@@ -31783,7 +31777,7 @@ function postMsg(passphrase, msgToEncrypt) {
 }
 
 function handleClose() {
-  console.log('resetting the state after closing dialog');
+  console.log('Resetting the state after closing dialog');
 
   this.setState({
     sender: '',
@@ -31796,12 +31790,12 @@ function handleClose() {
 }
 
 function decryptMsg() {
-  console.log('inside handleDecrypt!');
+  console.log('Inside handleDecrypt!');
   var msgToDecrypt = this.state.showDialog;
   var passphrase = this.state.passphrase;
 
   _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
-    console.log(res);
+    console.log('Response after posting encrypted msg to server', res);
 
     // this.setState({
     //   sender: ,
@@ -31835,13 +31829,8 @@ function createNewPassphrase(event) {
   });
 }
 
-function displayMsg(string) {
-  var stringLength = string.length;
-}
-
 module.exports = {
   generatePassphrase: generatePassphrase,
-  parseDate: parseDate,
   handleSender: handleSender,
   handleMessage: handleMessage,
   handleDate: handleDate,

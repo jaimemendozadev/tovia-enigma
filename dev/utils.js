@@ -25,11 +25,6 @@ const generatePassphrase = () => {
   return text;
 };
 
-const parseDate = (date) => {
-  const parsedDate = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
-  return parsedDate;
-};
-
 function handleSender(event) {
   this.setState({
     sender: event,
@@ -51,7 +46,7 @@ function handleDate(date) {
 function postMsg(passphrase, msgToEncrypt) {
   axios.post(`${url}/encrypt/${passphrase}`, msgToEncrypt)
     .then((res) => {
-      console.log(res);
+      console.log('Response after posting unencrypted msg to server', res);
       this.setState({
         encrypted: res.data,
       });
@@ -62,7 +57,7 @@ function postMsg(passphrase, msgToEncrypt) {
 }
 
 function handleClose() {
-  console.log('resetting the state after closing dialog');
+  console.log('Resetting the state after closing dialog');
 
   this.setState({
     sender: '',
@@ -75,14 +70,14 @@ function handleClose() {
 }
 
 function decryptMsg() {
-  console.log('inside handleDecrypt!');
+  console.log('Inside handleDecrypt!');
   const msgToDecrypt = this.state.showDialog;
   const passphrase = this.state.passphrase;
 
 
   axios.post(`${url}/decrypt/${passphrase}`, { msgToDecrypt })
     .then((res) => {
-      console.log(res);
+      console.log('Response after posting encrypted msg to server', res);
 
       // this.setState({
       //   sender: ,
@@ -118,14 +113,8 @@ function createNewPassphrase(event) {
   });
 }
 
-function displayMsg(string) {
-  const stringLength = string.length;
-}
-
-
 module.exports = {
   generatePassphrase,
-  parseDate,
   handleSender,
   handleMessage,
   handleDate,

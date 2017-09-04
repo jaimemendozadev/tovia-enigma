@@ -9,6 +9,8 @@ router.post('/encrypt/:passphrase', (req, res) => {
 
   const encrypted = encryptAndSave(sender, date, passphrase, msgToEncrypt);
 
+  console.log('Encrypted message from server is ', encrypted);
+
   res.send(encrypted);
 });
 
@@ -18,6 +20,7 @@ router.post('/decrypt/:passphrase', (req, res) => {
 
   const decrypted = retrieveAndDecrypt(msgToDecrypt, passphrase);
 
+  console.log('Decrypted message from server is ', decrypted);
 
   res.send(decrypted);
 });

@@ -8,7 +8,7 @@ import {Button} from 'react-toolbox/lib/button';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import axios from 'axios';
-const {generatePassphrase, parseDate, handleSender, handleMessage, handleDate, postMsg, handleClose, decryptMsg, handleDialogInput, createNewPassphrase} = require('./utils.js');
+const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleClose, decryptMsg, handleDialogInput, createNewPassphrase} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -40,7 +40,7 @@ class App extends Component {
 
       var msgToEncrypt = {
         sender: this.state.sender,
-        date: parseDate(this.state.date),
+        date: this.state.date,
         unencrypted: this.state.unencrypted
       }
       var passphrase = this.state.passphrase;
@@ -97,6 +97,8 @@ class App extends Component {
           />
           <div className="btn-container">
             <Button onClick={this.checkEncrypt} label="ENCRYPT" />
+            
+            { /*MUST CREATE onClick CB FOR THIS BUTTON*/ }
             <Button label="DECRYPT" />
           </div>
           
