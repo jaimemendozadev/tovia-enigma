@@ -15,8 +15,19 @@ form {
   border: 1px solid grey;
 }
 
+/* .avatar-container input {
+  float: right;
+  width: 70%;
+}
+
+.avatar {
+  float: left;
+  width: 20%;
+} */
+
 .btn-container{
-  margin-top: 2.5em;
+
+  margin: 2.5em auto;
 }
 
 

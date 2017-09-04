@@ -14571,6 +14571,10 @@ var _reactDom = __webpack_require__(37);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _avatar = __webpack_require__(306);
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
 var _input = __webpack_require__(100);
 
 var _input2 = _interopRequireDefault(_input);
@@ -14688,7 +14692,16 @@ var App = function (_Component) {
         _react2.default.createElement(
           'form',
           null,
-          _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: this.handleSender }),
+          _react2.default.createElement(
+            'div',
+            { className: 'avatar-container' },
+            _react2.default.createElement(
+              _avatar2.default,
+              { className: 'avatar' },
+              _react2.default.createElement('img', { src: 'https://placeimg.com/80/80/animals' })
+            ),
+            _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: this.handleSender })
+          ),
           _react2.default.createElement(_input2.default, {
             type: 'text',
             label: 'Message',
@@ -14712,7 +14725,12 @@ var App = function (_Component) {
             _react2.default.createElement(_button.Button, { label: 'DECRYPT' })
           )
         ),
-        _react2.default.createElement('nav', null),
+        _react2.default.createElement(
+          'div',
+          { className: 'btn-container' },
+          _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
+          _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
+        ),
         _react2.default.createElement(
           _dialog2.default,
           {
@@ -30814,7 +30832,7 @@ exports = module.exports = __webpack_require__(20)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  \n  width: 500px;\n  \n}\n\nform {\n  width: 370px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n.styles__btn-container___2BKAR{\n  margin-top: 2.5em;\n}\n\n\n\n\n", ""]);
+exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  \n  width: 500px;\n  \n}\n\nform {\n  width: 370px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n/* .avatar-container input {\n  float: right;\n  width: 70%;\n}\n\n.avatar {\n  float: left;\n  width: 20%;\n} */\n\n.styles__btn-container___2BKAR{\n\n  margin: 2.5em auto;\n}\n\n\n\n\n", ""]);
 
 // exports
 exports.locals = {
@@ -31705,11 +31723,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var url = 'http://localhost:3000/api';
 
-var generatePassphrase = function generatePassphrase() {
+var capitalize = function capitalize() {
   var text = '';
+  var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  text += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
+  console.log('The capital letter is ', text);
+  return text;
+};
+
+var generatePassphrase = function generatePassphrase() {
+  var text = capitalize();
+
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (var i = 0; i < 5; i += 1) {
+  for (var i = 0; i < 4; i += 1) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
@@ -31838,6 +31867,187 @@ module.exports = {
   decryptMsg: decryptMsg,
   handleDialogInput: handleDialogInput,
   createNewPassphrase: createNewPassphrase
+};
+
+/***/ }),
+/* 306 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Avatar = undefined;
+
+var _reactCssThemr = __webpack_require__(9);
+
+var _identifiers = __webpack_require__(10);
+
+var _Avatar = __webpack_require__(307);
+
+var _FontIcon = __webpack_require__(24);
+
+var _theme = __webpack_require__(308);
+
+var _theme2 = _interopRequireDefault(_theme);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Avatar = (0, _Avatar.avatarFactory)(_FontIcon.FontIcon);
+var ThemedAvatar = (0, _reactCssThemr.themr)(_identifiers.AVATAR, _theme2.default)(Avatar);
+
+exports.default = ThemedAvatar;
+exports.Avatar = ThemedAvatar;
+
+/***/ }),
+/* 307 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Avatar = exports.avatarFactory = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(5);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = __webpack_require__(14);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _reactCssThemr = __webpack_require__(9);
+
+var _identifiers = __webpack_require__(10);
+
+var _FontIcon = __webpack_require__(24);
+
+var _FontIcon2 = _interopRequireDefault(_FontIcon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var factory = function factory(FontIcon) {
+  var Avatar = function Avatar(_ref) {
+    var alt = _ref.alt,
+        children = _ref.children,
+        className = _ref.className,
+        cover = _ref.cover,
+        icon = _ref.icon,
+        image = _ref.image,
+        theme = _ref.theme,
+        title = _ref.title,
+        other = _objectWithoutProperties(_ref, ['alt', 'children', 'className', 'cover', 'icon', 'image', 'theme', 'title']);
+
+    return _react2.default.createElement(
+      'div',
+      _extends({
+        'data-react-toolbox': 'avatar',
+        className: (0, _classnames2.default)(theme.avatar, className)
+      }, other),
+      children,
+      cover && typeof image === 'string' && _react2.default.createElement('span', {
+        'aria-label': alt,
+        className: theme.image,
+        style: { backgroundImage: 'url(' + image + ')' }
+      }),
+      !cover && (typeof image === 'string' ? _react2.default.createElement('img', { alt: alt, className: theme.image, src: image }) : image),
+      typeof icon === 'string' ? _react2.default.createElement(FontIcon, { className: theme.letter, value: icon, alt: alt }) : icon,
+      title ? _react2.default.createElement(
+        'span',
+        { className: theme.letter },
+        title[0]
+      ) : null
+    );
+  };
+
+  Avatar.propTypes = {
+    alt: _propTypes2.default.string,
+    children: _propTypes2.default.node,
+    className: _propTypes2.default.string,
+    cover: _propTypes2.default.bool,
+    icon: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.element]),
+    image: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.element]),
+    theme: _propTypes2.default.shape({
+      avatar: _propTypes2.default.string,
+      image: _propTypes2.default.string,
+      letter: _propTypes2.default.string
+    }),
+    title: _propTypes2.default.string
+  };
+
+  Avatar.defaultProps = {
+    alt: '',
+    cover: false
+  };
+
+  return Avatar;
+};
+
+var Avatar = factory(_FontIcon2.default);
+exports.default = (0, _reactCssThemr.themr)(_identifiers.AVATAR)(Avatar);
+exports.avatarFactory = factory;
+exports.Avatar = Avatar;
+
+/***/ }),
+/* 308 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(309);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(21)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./theme.css", function() {
+			var newContent = require("!!../../../css-loader/index.js?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./theme.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(20)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ":root {\n  --palette-red-50: rgb(255, 235, 238);\n  --palette-red-100: rgb(255, 205, 210);\n  --palette-red-200: rgb(239, 154, 154);\n  --palette-red-300: rgb(229, 115, 115);\n  --palette-red-400: rgb(239, 83, 80);\n  --palette-red-500: rgb(244, 67, 54);\n  --palette-red-600: rgb(229, 57, 53);\n  --palette-red-700: rgb(211, 47, 47);\n  --palette-red-800: rgb(198, 40, 40);\n  --palette-red-900: rgb(183, 28, 28);\n  --palette-red-a100: rgb(255, 138, 128);\n  --palette-red-a200: rgb(255, 82, 82);\n  --palette-red-a400: rgb(255, 23, 68);\n  --palette-red-a700: rgb(213, 0, 0);\n  --palette-pink-50: rgb(252, 228, 236);\n  --palette-pink-100: rgb(248, 187, 208);\n  --palette-pink-200: rgb(244, 143, 177);\n  --palette-pink-300: rgb(240, 98, 146);\n  --palette-pink-400: rgb(236, 64, 122);\n  --palette-pink-500: rgb(233, 30, 99);\n  --palette-pink-600: rgb(216, 27, 96);\n  --palette-pink-700: rgb(194, 24, 91);\n  --palette-pink-800: rgb(173, 20, 87);\n  --palette-pink-900: rgb(136, 14, 79);\n  --palette-pink-a100: rgb(255, 128, 171);\n  --palette-pink-a200: rgb(255, 64, 129);\n  --palette-pink-a400: rgb(245, 0, 87);\n  --palette-pink-a700: rgb(197, 17, 98);\n  --palette-purple-50: rgb(243, 229, 245);\n  --palette-purple-100: rgb(225, 190, 231);\n  --palette-purple-200: rgb(206, 147, 216);\n  --palette-purple-300: rgb(186, 104, 200);\n  --palette-purple-400: rgb(171, 71, 188);\n  --palette-purple-500: rgb(156, 39, 176);\n  --palette-purple-600: rgb(142, 36, 170);\n  --palette-purple-700: rgb(123, 31, 162);\n  --palette-purple-800: rgb(106, 27, 154);\n  --palette-purple-900: rgb(74, 20, 140);\n  --palette-purple-a100: rgb(234, 128, 252);\n  --palette-purple-a200: rgb(224, 64, 251);\n  --palette-purple-a400: rgb(213, 0, 249);\n  --palette-purple-a700: rgb(170, 0, 255);\n  --palette-deep-purple-50: rgb(237, 231, 246);\n  --palette-deep-purple-100: rgb(209, 196, 233);\n  --palette-deep-purple-200: rgb(179, 157, 219);\n  --palette-deep-purple-300: rgb(149, 117, 205);\n  --palette-deep-purple-400: rgb(126, 87, 194);\n  --palette-deep-purple-500: rgb(103, 58, 183);\n  --palette-deep-purple-600: rgb(94, 53, 177);\n  --palette-deep-purple-700: rgb(81, 45, 168);\n  --palette-deep-purple-800: rgb(69, 39, 160);\n  --palette-deep-purple-900: rgb(49, 27, 146);\n  --palette-deep-purple-a100: rgb(179, 136, 255);\n  --palette-deep-purple-a200: rgb(124, 77, 255);\n  --palette-deep-purple-a400: rgb(101, 31, 255);\n  --palette-deep-purple-a700: rgb(98, 0, 234);\n  --palette-indigo-50: rgb(232, 234, 246);\n  --palette-indigo-100: rgb(197, 202, 233);\n  --palette-indigo-200: rgb(159, 168, 218);\n  --palette-indigo-300: rgb(121, 134, 203);\n  --palette-indigo-400: rgb(92, 107, 192);\n  --palette-indigo-500: rgb(63, 81, 181);\n  --palette-indigo-600: rgb(57, 73, 171);\n  --palette-indigo-700: rgb(48, 63, 159);\n  --palette-indigo-800: rgb(40, 53, 147);\n  --palette-indigo-900: rgb(26, 35, 126);\n  --palette-indigo-a100: rgb(140, 158, 255);\n  --palette-indigo-a200: rgb(83, 109, 254);\n  --palette-indigo-a400: rgb(61, 90, 254);\n  --palette-indigo-a700: rgb(48, 79, 254);\n  --palette-blue-50: rgb(227, 242, 253);\n  --palette-blue-100: rgb(187, 222, 251);\n  --palette-blue-200: rgb(144, 202, 249);\n  --palette-blue-300: rgb(100, 181, 246);\n  --palette-blue-400: rgb(66, 165, 245);\n  --palette-blue-500: rgb(33, 150, 243);\n  --palette-blue-600: rgb(30, 136, 229);\n  --palette-blue-700: rgb(25, 118, 210);\n  --palette-blue-800: rgb(21, 101, 192);\n  --palette-blue-900: rgb(13, 71, 161);\n  --palette-blue-a100: rgb(130, 177, 255);\n  --palette-blue-a200: rgb(68, 138, 255);\n  --palette-blue-a400: rgb(41, 121, 255);\n  --palette-blue-a700: rgb(41, 98, 255);\n  --palette-light-blue-50: rgb(225, 245, 254);\n  --palette-light-blue-100: rgb(179, 229, 252);\n  --palette-light-blue-200: rgb(129, 212, 250);\n  --palette-light-blue-300: rgb(79, 195, 247);\n  --palette-light-blue-400: rgb(41, 182, 246);\n  --palette-light-blue-500: rgb(3, 169, 244);\n  --palette-light-blue-600: rgb(3, 155, 229);\n  --palette-light-blue-700: rgb(2, 136, 209);\n  --palette-light-blue-800: rgb(2, 119, 189);\n  --palette-light-blue-900: rgb(1, 87, 155);\n  --palette-light-blue-a100: rgb(128, 216, 255);\n  --palette-light-blue-a200: rgb(64, 196, 255);\n  --palette-light-blue-a400: rgb(0, 176, 255);\n  --palette-light-blue-a700: rgb(0, 145, 234);\n  --palette-cyan-50: rgb(224, 247, 250);\n  --palette-cyan-100: rgb(178, 235, 242);\n  --palette-cyan-200: rgb(128, 222, 234);\n  --palette-cyan-300: rgb(77, 208, 225);\n  --palette-cyan-400: rgb(38, 198, 218);\n  --palette-cyan-500: rgb(0, 188, 212);\n  --palette-cyan-600: rgb(0, 172, 193);\n  --palette-cyan-700: rgb(0, 151, 167);\n  --palette-cyan-800: rgb(0, 131, 143);\n  --palette-cyan-900: rgb(0, 96, 100);\n  --palette-cyan-a100: rgb(132, 255, 255);\n  --palette-cyan-a200: rgb(24, 255, 255);\n  --palette-cyan-a400: rgb(0, 229, 255);\n  --palette-cyan-a700: rgb(0, 184, 212);\n  --palette-teal-50: rgb(224, 242, 241);\n  --palette-teal-100: rgb(178, 223, 219);\n  --palette-teal-200: rgb(128, 203, 196);\n  --palette-teal-300: rgb(77, 182, 172);\n  --palette-teal-400: rgb(38, 166, 154);\n  --palette-teal-500: rgb(0, 150, 136);\n  --palette-teal-600: rgb(0, 137, 123);\n  --palette-teal-700: rgb(0, 121, 107);\n  --palette-teal-800: rgb(0, 105, 92);\n  --palette-teal-900: rgb(0, 77, 64);\n  --palette-teal-a100: rgb(167, 255, 235);\n  --palette-teal-a200: rgb(100, 255, 218);\n  --palette-teal-a400: rgb(29, 233, 182);\n  --palette-teal-a700: rgb(0, 191, 165);\n  --palette-green-50: rgb(232, 245, 233);\n  --palette-green-100: rgb(200, 230, 201);\n  --palette-green-200: rgb(165, 214, 167);\n  --palette-green-300: rgb(129, 199, 132);\n  --palette-green-400: rgb(102, 187, 106);\n  --palette-green-500: rgb(76, 175, 80);\n  --palette-green-600: rgb(67, 160, 71);\n  --palette-green-700: rgb(56, 142, 60);\n  --palette-green-800: rgb(46, 125, 50);\n  --palette-green-900: rgb(27, 94, 32);\n  --palette-green-a100: rgb(185, 246, 202);\n  --palette-green-a200: rgb(105, 240, 174);\n  --palette-green-a400: rgb(0, 230, 118);\n  --palette-green-a700: rgb(0, 200, 83);\n  --palette-light-green-50: rgb(241, 248, 233);\n  --palette-light-green-100: rgb(220, 237, 200);\n  --palette-light-green-200: rgb(197, 225, 165);\n  --palette-light-green-300: rgb(174, 213, 129);\n  --palette-light-green-400: rgb(156, 204, 101);\n  --palette-light-green-500: rgb(139, 195, 74);\n  --palette-light-green-600: rgb(124, 179, 66);\n  --palette-light-green-700: rgb(104, 159, 56);\n  --palette-light-green-800: rgb(85, 139, 47);\n  --palette-light-green-900: rgb(51, 105, 30);\n  --palette-light-green-a100: rgb(204, 255, 144);\n  --palette-light-green-a200: rgb(178, 255, 89);\n  --palette-light-green-a400: rgb(118, 255, 3);\n  --palette-light-green-a700: rgb(100, 221, 23);\n  --palette-lime-50: rgb(249, 251, 231);\n  --palette-lime-100: rgb(240, 244, 195);\n  --palette-lime-200: rgb(230, 238, 156);\n  --palette-lime-300: rgb(220, 231, 117);\n  --palette-lime-400: rgb(212, 225, 87);\n  --palette-lime-500: rgb(205, 220, 57);\n  --palette-lime-600: rgb(192, 202, 51);\n  --palette-lime-700: rgb(175, 180, 43);\n  --palette-lime-800: rgb(158, 157, 36);\n  --palette-lime-900: rgb(130, 119, 23);\n  --palette-lime-a100: rgb(244, 255, 129);\n  --palette-lime-a200: rgb(238, 255, 65);\n  --palette-lime-a400: rgb(198, 255, 0);\n  --palette-lime-a700: rgb(174, 234, 0);\n  --palette-yellow-50: rgb(255, 253, 231);\n  --palette-yellow-100: rgb(255, 249, 196);\n  --palette-yellow-200: rgb(255, 245, 157);\n  --palette-yellow-300: rgb(255, 241, 118);\n  --palette-yellow-400: rgb(255, 238, 88);\n  --palette-yellow-500: rgb(255, 235, 59);\n  --palette-yellow-600: rgb(253, 216, 53);\n  --palette-yellow-700: rgb(251, 192, 45);\n  --palette-yellow-800: rgb(249, 168, 37);\n  --palette-yellow-900: rgb(245, 127, 23);\n  --palette-yellow-a100: rgb(255, 255, 141);\n  --palette-yellow-a200: rgb(255, 255, 0);\n  --palette-yellow-a400: rgb(255, 234, 0);\n  --palette-yellow-a700: rgb(255, 214, 0);\n  --palette-amber-50: rgb(255, 248, 225);\n  --palette-amber-100: rgb(255, 236, 179);\n  --palette-amber-200: rgb(255, 224, 130);\n  --palette-amber-300: rgb(255, 213, 79);\n  --palette-amber-400: rgb(255, 202, 40);\n  --palette-amber-500: rgb(255, 193, 7);\n  --palette-amber-600: rgb(255, 179, 0);\n  --palette-amber-700: rgb(255, 160, 0);\n  --palette-amber-800: rgb(255, 143, 0);\n  --palette-amber-900: rgb(255, 111, 0);\n  --palette-amber-a100: rgb(255, 229, 127);\n  --palette-amber-a200: rgb(255, 215, 64);\n  --palette-amber-a400: rgb(255, 196, 0);\n  --palette-amber-a700: rgb(255, 171, 0);\n  --palette-orange-50: rgb(255, 243, 224);\n  --palette-orange-100: rgb(255, 224, 178);\n  --palette-orange-200: rgb(255, 204, 128);\n  --palette-orange-300: rgb(255, 183, 77);\n  --palette-orange-400: rgb(255, 167, 38);\n  --palette-orange-500: rgb(255, 152, 0);\n  --palette-orange-600: rgb(251, 140, 0);\n  --palette-orange-700: rgb(245, 124, 0);\n  --palette-orange-800: rgb(239, 108, 0);\n  --palette-orange-900: rgb(230, 81, 0);\n  --palette-orange-a100: rgb(255, 209, 128);\n  --palette-orange-a200: rgb(255, 171, 64);\n  --palette-orange-a400: rgb(255, 145, 0);\n  --palette-orange-a700: rgb(255, 109, 0);\n  --palette-deep-orange-50: rgb(251, 233, 231);\n  --palette-deep-orange-100: rgb(255, 204, 188);\n  --palette-deep-orange-200: rgb(255, 171, 145);\n  --palette-deep-orange-300: rgb(255, 138, 101);\n  --palette-deep-orange-400: rgb(255, 112, 67);\n  --palette-deep-orange-500: rgb(255, 87, 34);\n  --palette-deep-orange-600: rgb(244, 81, 30);\n  --palette-deep-orange-700: rgb(230, 74, 25);\n  --palette-deep-orange-800: rgb(216, 67, 21);\n  --palette-deep-orange-900: rgb(191, 54, 12);\n  --palette-deep-orange-a100: rgb(255, 158, 128);\n  --palette-deep-orange-a200: rgb(255, 110, 64);\n  --palette-deep-orange-a400: rgb(255, 61, 0);\n  --palette-deep-orange-a700: rgb(221, 44, 0);\n  --palette-brown-50: rgb(239, 235, 233);\n  --palette-brown-100: rgb(215, 204, 200);\n  --palette-brown-200: rgb(188, 170, 164);\n  --palette-brown-300: rgb(161, 136, 127);\n  --palette-brown-400: rgb(141, 110, 99);\n  --palette-brown-500: rgb(121, 85, 72);\n  --palette-brown-600: rgb(109, 76, 65);\n  --palette-brown-700: rgb(93, 64, 55);\n  --palette-brown-800: rgb(78, 52, 46);\n  --palette-brown-900: rgb(62, 39, 35);\n  --palette-grey-50: rgb(250, 250, 250);\n  --palette-grey-100: rgb(245, 245, 245);\n  --palette-grey-200: rgb(238, 238, 238);\n  --palette-grey-300: rgb(224, 224, 224);\n  --palette-grey-400: rgb(189, 189, 189);\n  --palette-grey-500: rgb(158, 158, 158);\n  --palette-grey-600: rgb(117, 117, 117);\n  --palette-grey-700: rgb(97, 97, 97);\n  --palette-grey-800: rgb(66, 66, 66);\n  --palette-grey-900: rgb(33, 33, 33);\n  --palette-blue-grey-50: rgb(236, 239, 241);\n  --palette-blue-grey-100: rgb(207, 216, 220);\n  --palette-blue-grey-200: rgb(176, 190, 197);\n  --palette-blue-grey-300: rgb(144, 164, 174);\n  --palette-blue-grey-400: rgb(120, 144, 156);\n  --palette-blue-grey-500: rgb(96, 125, 139);\n  --palette-blue-grey-600: rgb(84, 110, 122);\n  --palette-blue-grey-700: rgb(69, 90, 100);\n  --palette-blue-grey-800: rgb(55, 71, 79);\n  --palette-blue-grey-900: rgb(38, 50, 56);\n  --color-black: rgb(0, 0, 0);\n  --color-white: rgb(255, 255, 255);\n  --color-dark-contrast: var(--color-white);\n  --color-light-contrast: var(--color-black);\n}\n:root {\n  --color-divider: var(--palette-grey-200);\n  --color-background: var(--color-white);\n  --color-text: var(--palette-grey-900);\n  --color-text-secondary: var(--palette-grey-600);\n  --color-primary: var(--palette-indigo-500);\n  --color-primary-dark: var(--palette-indigo-700);\n  --color-accent: var(--palette-pink-a200);\n  --color-accent-dark: var(--palette-pink-700);\n  --color-primary-contrast: var(--color-dark-contrast);\n  --color-accent-contrast: var(--color-dark-contrast);\n  --unit: 10px;\n  --preferred-font: 'Roboto', 'Helvetica', 'Arial', sans-serif;\n  --font-size: calc(1.6 * var(--unit));\n  --font-size-tiny: calc(1.2 * var(--unit));\n  --font-size-small: calc(1.4 * var(--unit));\n  --font-size-normal: var(--font-size);\n  --font-size-big: calc(1.8 * var(--unit));\n  --font-weight-thin: 300;\n  --font-weight-normal: 400;\n  --font-weight-semi-bold: 500;\n  --font-weight-bold: 700;\n  --shadow-2p:\n    0 2px 2px 0 rgba(0, 0, 0, 0.14),\n    0 3px 1px -2px rgba(0, 0, 0, 0.2),\n    0 1px 5px 0 rgba(0, 0, 0, 0.12);\n  --shadow-3p:\n    0 3px 4px 0 rgba(0, 0, 0, 0.14),\n    0 3px 3px -2px rgba(0, 0, 0, 0.2),\n    0 1px 8px 0 rgba(0, 0, 0, 0.12);\n  --shadow-4p:\n    0 4px 5px 0 rgba(0, 0, 0, 0.14),\n    0 1px 10px 0 rgba(0, 0, 0, 0.12),\n    0 2px 4px -1px rgba(0, 0, 0, 0.2);\n  --shadow-6p:\n    0 6px 10px 0 rgba(0, 0, 0, 0.14),\n    0 1px 18px 0 rgba(0, 0, 0, 0.12),\n    0 3px 5px -1px rgba(0, 0, 0, 0.2);\n  --shadow-8p:\n    0 8px 10px 1px rgba(0, 0, 0, 0.14),\n    0 3px 14px 2px rgba(0, 0, 0, 0.12),\n    0 5px 5px -3px rgba(0, 0, 0, 0.2);\n  --shadow-16p:\n    0 16px 24px 2px rgba(0, 0, 0, 0.14),\n    0 6px 30px 5px rgba(0, 0, 0, 0.12),\n    0 8px 10px -5px rgba(0, 0, 0, 0.2);\n  --shadow-key-umbra-opacity: 0.2;\n  --shadow-key-penumbra-opacity: 0.14;\n  --shadow-ambient-shadow-opacity: 0.12;\n  --zdepth-shadow-1: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);\n  --zdepth-shadow-2: 0 3px 10px rgba(0, 0, 0, 0.16), 0 3px 10px rgba(0, 0, 0, 0.23);\n  --zdepth-shadow-3: 0 10px 30px rgba(0, 0, 0, 0.19), 0 6px 10px rgba(0, 0, 0, 0.23);\n  --zdepth-shadow-4: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);\n  --zdepth-shadow-5: 0 19px 60px rgba(0, 0, 0, 0.3), 0 15px 20px rgba(0, 0, 0, 0.22);\n  --animation-duration: 0.35s;\n  --animation-delay: calc(var(--animation-duration) / 5);\n  --animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1);\n  --animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1);\n  --animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1);\n  --animation-curve-default: var(--animation-curve-fast-out-slow-in);\n  --z-index-highest: 300;\n  --z-index-higher: 200;\n  --z-index-high: 100;\n  --z-index-normal: 1;\n  --z-index-low: -100;\n  --z-index-lower: -200\n}\n:root {\n  --avatar-color: var(--color-white);\n  --avatar-background: var(--palette-grey-500);\n  --avatar-size: calc(4 * var(--unit));\n  --avatar-font-size: calc(2.4 * var(--unit));\n}\n.theme__avatar___3OjJz {\n  background-color: var(--avatar-background);\n  border-radius: 50%;\n  color: var(--avatar-color);\n  display: inline-block;\n  font-size: var(--avatar-font-size);\n  height: var(--avatar-size);\n  overflow: hidden;\n  position: relative;\n  text-align: center;\n  vertical-align: middle;\n  width: var(--avatar-size);\n  box-sizing: border-box;\n  font-family: var(--preferred-font);\n  -webkit-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  text-size-adjust: 100%\n}\n.theme__avatar___3OjJz *,\n    .theme__avatar___3OjJz *::after,\n    .theme__avatar___3OjJz *::before {\n  box-sizing: border-box;\n  -webkit-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  text-size-adjust: 100%;\n  -webkit-touch-callout: none;\n}\n.theme__avatar___3OjJz > svg {\n  fill: currentColor;\n  height: var(--avatar-size);\n  width: 1em;\n}\n.theme__avatar___3OjJz > img {\n  height: auto;\n  max-width: 100%;\n}\n.theme__image___2Ueo9 {\n  background-color: transparent;\n  background-position: center;\n  background-size: cover;\n  border-radius: 50%;\n  display: block;\n  height: 100%;\n  position: absolute;\n  width: 100%;\n}\n.theme__letter___26GdB {\n  display: block;\n  line-height: var(--avatar-size);\n  width: 100%;\n}\n", ""]);
+
+// exports
+exports.locals = {
+	"avatar": "theme__avatar___3OjJz",
+	"image": "theme__image___2Ueo9",
+	"letter": "theme__letter___26GdB"
 };
 
 /***/ })

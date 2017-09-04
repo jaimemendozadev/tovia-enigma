@@ -2,11 +2,22 @@ import axios from 'axios';
 
 const url = 'http://localhost:3000/api';
 
-const generatePassphrase = () => {
+const capitalize = () => {
   let text = '';
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  text += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
+  console.log('The capital letter is ', text);
+  return text;
+};
+
+const generatePassphrase = () => {
+  let text = capitalize();
+
   const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Avatar from 'react-toolbox/lib/avatar';
 import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
 import DatePicker from 'react-toolbox/lib/date_picker';
@@ -71,7 +72,11 @@ class App extends Component {
     return (
       <div className="container">
         <form>
+
+          <div className="avatar-container">
+          <Avatar className="avatar"><img src="https://placeimg.com/80/80/animals"/></Avatar>
           <Input type='text' label='Name' name='name' value={this.state.sender} onChange={this.handleSender} />
+          </div>
   
           <Input 
             type='text' 
@@ -97,12 +102,12 @@ class App extends Component {
           
         </form>
    
-        <nav>
+        <div className="btn-container">
 
-          {/* <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
-          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" /> */}
+          <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
+          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
 
-        </nav>
+        </div>
 
 
 
