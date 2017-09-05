@@ -14573,10 +14573,6 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactToolbox = __webpack_require__(406);
 
-var _avatar = __webpack_require__(306);
-
-var _avatar2 = _interopRequireDefault(_avatar);
-
 var _input = __webpack_require__(100);
 
 var _input2 = _interopRequireDefault(_input);
@@ -14584,12 +14580,6 @@ var _input2 = _interopRequireDefault(_input);
 var _link = __webpack_require__(235);
 
 var _link2 = _interopRequireDefault(_link);
-
-var _date_picker = __webpack_require__(239);
-
-var _date_picker2 = _interopRequireDefault(_date_picker);
-
-var _button = __webpack_require__(66);
 
 var _dialog = __webpack_require__(119);
 
@@ -14602,6 +14592,10 @@ var _styles2 = _interopRequireDefault(_styles);
 var _axios = __webpack_require__(120);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _form = __webpack_require__(537);
+
+var _form2 = _interopRequireDefault(_form);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14662,42 +14656,16 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        _react2.default.createElement(
-          'form',
-          null,
-          _react2.default.createElement(
-            'div',
-            { className: 'avatar-container' },
-            _react2.default.createElement(
-              _avatar2.default,
-              { className: 'avatar' },
-              _react2.default.createElement('img', { src: 'https://placeimg.com/80/80/animals' })
-            ),
-            _react2.default.createElement(_input2.default, { type: 'text', label: 'Name', name: 'name', value: this.state.sender, onChange: handleSender.bind(this) })
-          ),
-          _react2.default.createElement(_input2.default, {
-            type: 'text',
-            label: 'Message',
-            name: 'message',
-            required: true,
-            multiline: true,
-            value: this.state.unencrypted,
-            onChange: handleMessage.bind(this),
-            maxLength: 120 }),
-          _react2.default.createElement(_date_picker2.default, {
-            required: true,
-            label: 'Expiration Date',
-            sundayFirstDayOfWeek: true,
-            onChange: handleDate.bind(this),
-            value: this.state.date
-          }),
-          _react2.default.createElement(
-            'div',
-            { className: 'btn-container' },
-            _react2.default.createElement(_button.Button, { onClick: handleEncrypt.bind(this), label: 'ENCRYPT' }),
-            _react2.default.createElement(_button.Button, { label: 'DECRYPT' })
-          )
-        ),
+        _react2.default.createElement(_form2.default, {
+          sender: this.state.sender,
+          handleSender: handleSender.bind(this),
+          unencrypted: this.state.unencrypted,
+          handleMessage: handleMessage.bind(this),
+          date: this.state.date,
+          handleDate: handleDate.bind(this),
+          handleEncrypt: handleEncrypt.bind(this),
+          decryptMsg: decryptMsg.bind(this)
+        }),
         _react2.default.createElement(
           'div',
           { className: 'btn-container' },
@@ -46680,6 +46648,85 @@ exports.locals = {
 	"tooltipRight": "theme__tooltipRight___3UQWj",
 	"tooltipInner": "theme__tooltipInner___9q2WH"
 };
+
+/***/ }),
+/* 537 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _avatar = __webpack_require__(306);
+
+var _avatar2 = _interopRequireDefault(_avatar);
+
+var _input = __webpack_require__(100);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _date_picker = __webpack_require__(239);
+
+var _date_picker2 = _interopRequireDefault(_date_picker);
+
+var _button = __webpack_require__(66);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Form = function Form(props) {
+  return _react2.default.createElement(
+    'form',
+    null,
+    _react2.default.createElement(
+      'div',
+      { className: 'avatar-container' },
+      _react2.default.createElement(
+        _avatar2.default,
+        { className: 'avatar' },
+        _react2.default.createElement('img', { src: 'https://placeimg.com/80/80/animals' })
+      ),
+      _react2.default.createElement(_input2.default, {
+        type: 'text',
+        label: 'Name',
+        name: 'name',
+        value: props.sender,
+        onChange: props.handleSender
+      })
+    ),
+    _react2.default.createElement(_input2.default, {
+      type: 'text',
+      label: 'Message',
+      name: 'message',
+      required: true,
+      multiline: true,
+      value: props.unencrypted,
+      onChange: props.handleMessage,
+      maxLength: 120
+    }),
+    _react2.default.createElement(_date_picker2.default, {
+      required: true,
+      label: 'Expiration Date',
+      sundayFirstDayOfWeek: true,
+      onChange: props.handleDate,
+      value: props.date
+    }),
+    _react2.default.createElement(
+      'div',
+      { className: 'btn-container' },
+      _react2.default.createElement(_button.Button, { onClick: props.handleEncrypt, label: 'ENCRYPT' }),
+      _react2.default.createElement(_button.Button, { onClick: props.decryptMsg, label: 'DECRYPT' })
+    )
+  );
+};
+
+exports.default = Form;
 
 /***/ })
 /******/ ]);
