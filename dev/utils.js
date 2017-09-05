@@ -53,7 +53,16 @@ function postMsg(passphrase, msgToEncrypt) {
       });
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Error sending encrypted msg to backend ', err);
+
+      this.setState({
+        sender: '',
+        unencrypted: 'Whoops, there was an error saving your encrypted message',
+        encrypted: '',
+        date: '',
+        active: !this.state.active,
+        showDialog: '',
+      });
     });
 }
 
@@ -129,7 +138,12 @@ function decryptMsg() {
       }
     })
     .catch((err) => {
-      console.log(err);
+      console.log('Error decrypting msg from backend ', err);
+
+      this.setState({
+        unencrypted: 'Whoops, there was an error retrieving your message',
+        active: false,
+      });
     });
 }
 

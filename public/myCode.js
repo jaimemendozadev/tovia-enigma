@@ -31725,7 +31725,16 @@ function postMsg(passphrase, msgToEncrypt) {
       encrypted: res.data
     });
   }).catch(function (err) {
-    console.log(err);
+    console.log('Error sending encrypted msg to backend ', err);
+
+    _this.setState({
+      sender: '',
+      unencrypted: 'Whoops, there was an error saving your encrypted message',
+      encrypted: '',
+      date: '',
+      active: !_this.state.active,
+      showDialog: ''
+    });
   });
 }
 
@@ -31799,7 +31808,12 @@ function decryptMsg() {
       });
     }
   }).catch(function (err) {
-    console.log(err);
+    console.log('Error decrypting msg from backend ', err);
+
+    _this2.setState({
+      unencrypted: 'Whoops, there was an error retrieving your message',
+      active: false
+    });
   });
 }
 
