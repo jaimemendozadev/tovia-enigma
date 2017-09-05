@@ -31785,14 +31785,19 @@ function decryptMsg() {
   _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
     console.log('Msg successfully decrypted', res);
 
-    console.log('date is ', new Date(res.data.date));
-
-    _this2.setState({
-      sender: res.data.sender,
-      unencrypted: res.data.encrypted,
-      date: new Date(res.data.date),
-      active: false
-    });
+    if (res.data.error) {
+      _this2.setState({
+        unencrypted: res.data.error,
+        active: false
+      });
+    } else {
+      _this2.setState({
+        sender: res.data.sender,
+        unencrypted: res.data.encrypted,
+        date: new Date(res.data.date),
+        active: false
+      });
+    }
   }).catch(function (err) {
     console.log(err);
   });

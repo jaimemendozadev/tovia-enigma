@@ -31,8 +31,14 @@ const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
 const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
   const currentDate = new Date();
 
-
+  // handle case where there's no array for passphrase passed
   const availableMsgs = inMemoryDB[passphrase];
+
+  console.log('availableMsgs is ', availableMsgs);
+
+  if (availableMsgs === undefined) {
+    return { error: 'Whoops, there was an error retrieving your message' };
+  }
 
 
   let msgFound = false;
@@ -62,9 +68,9 @@ const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
 
     return msgResponse;
   } else if (msgFound !== false && notExpired === false) {
-    return 'Sorry, your message has expired and is no longer available to decrypt.';
+    return { error: 'Sorry, your message has expired and is no longer available to decrypt.' };
   }
-  return 'Whoops, there was an error retrieving your message';
+  return { error: 'Whoops, there was an error retrieving your message' };
 };
 
 module.exports = {

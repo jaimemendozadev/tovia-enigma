@@ -114,15 +114,19 @@ function decryptMsg() {
     .then((res) => {
       console.log('Msg successfully decrypted', res);
 
-      console.log('date is ', new Date(res.data.date));
-
-
-      this.setState({
-        sender: res.data.sender,
-        unencrypted: res.data.encrypted,
-        date: new Date(res.data.date),
-        active: false,
-      });
+      if (res.data.error) {
+        this.setState({
+          unencrypted: res.data.error,
+          active: false,
+        });
+      } else {
+        this.setState({
+          sender: res.data.sender,
+          unencrypted: res.data.encrypted,
+          date: new Date(res.data.date),
+          active: false,
+        });
+      }
     })
     .catch((err) => {
       console.log(err);
