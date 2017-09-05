@@ -14694,7 +14694,7 @@ var App = function (_Component) {
           null,
           _react2.default.createElement(_reactToolbox.Snackbar, {
             active: this.state.showSnackbar,
-            label: 'You\'re message is missing something. Please fill out the form entirely.',
+            label: 'You\'re message is missing something. Please fill out the form   entirely.',
             timeout: 3500,
             onTimeout: handleSnackbarTimeout.bind(this)
           })
@@ -30784,7 +30784,7 @@ exports = module.exports = __webpack_require__(20)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  \n  width: 500px;\n  \n}\n\nform {\n  width: 370px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n/* .avatar-container input {\n  float: right;\n  width: 70%;\n}\n\n.avatar {\n  float: left;\n  width: 20%;\n} */\n\n.styles__btn-container___2BKAR{\n\n  margin: 2.5em auto;\n}\n\n\n\n\n", ""]);
+exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  width: 500px;\n}\n\nform {\n  width: 350px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n.styles__btn-container___2BKAR{\n  margin: 2.5em auto;\n}\n\n\n\n\n", ""]);
 
 // exports
 exports.locals = {
@@ -31739,7 +31739,7 @@ function postMsg(passphrase, msgToEncrypt) {
 }
 
 function handleEncrypt() {
-  if (this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0) {
+  if (this.state.sender.length === 0 || !this.state.date || this.state.unencrypted.length === 0) {
     this.setState({
       showSnackbar: true
     });
@@ -31747,7 +31747,7 @@ function handleEncrypt() {
   }
   // if we don't have an encrypted msg in state from DB
   // create msg to send to DB for encryption
-  if (this.state.encrypted.length == 0) {
+  if (this.state.encrypted.length === 0) {
     var msgToEncrypt = {
       sender: this.state.sender,
       date: this.state.date,
@@ -31796,6 +31796,8 @@ function decryptMsg() {
 
     if (res.data.error) {
       _this2.setState({
+        sender: '',
+        date: '',
         unencrypted: res.data.error,
         active: false
       });
@@ -31811,6 +31813,8 @@ function decryptMsg() {
     console.log('Error decrypting msg from backend ', err);
 
     _this2.setState({
+      sender: '',
+      date: '',
       unencrypted: 'Whoops, there was an error retrieving your message',
       active: false
     });
@@ -46713,14 +46717,20 @@ var Form = function Form(props) {
     'form',
     null,
     _react2.default.createElement(
+      'h1',
+      null,
+      'Tovia\'s Enigma'
+    ),
+    _react2.default.createElement(
       'div',
       { className: 'avatar-container' },
       _react2.default.createElement(
         _avatar2.default,
         { className: 'avatar' },
-        _react2.default.createElement('img', { src: 'https://placeimg.com/80/80/animals' })
+        _react2.default.createElement('img', { alt: '', src: 'ic_account_circle_white_48dp_1x.png' })
       ),
       _react2.default.createElement(_input2.default, {
+        className: 'nameInput',
         type: 'text',
         label: 'Name',
         name: 'name',

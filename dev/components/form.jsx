@@ -6,11 +6,13 @@ import { Button } from 'react-toolbox/lib/button';
 
 const Form = props => (
   <form>
+    <h1>Tovia's Enigma</h1>
     <div className="avatar-container">
       <Avatar className="avatar">
-        <img src="https://placeimg.com/80/80/animals" />
+        <img alt="" src="ic_account_circle_white_48dp_1x.png" />
       </Avatar>
       <Input
+        className="nameInput"
         type="text"
         label="Name"
         name="name"

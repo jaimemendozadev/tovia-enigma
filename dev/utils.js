@@ -68,7 +68,7 @@ function postMsg(passphrase, msgToEncrypt) {
 
 
 function handleEncrypt() {
-  if (this.state.sender.length == 0 || !this.state.date || this.state.unencrypted.length == 0) {
+  if (this.state.sender.length === 0 || !this.state.date || this.state.unencrypted.length === 0) {
     this.setState({
       showSnackbar: true,
     });
@@ -76,7 +76,7 @@ function handleEncrypt() {
   }
   // if we don't have an encrypted msg in state from DB
   // create msg to send to DB for encryption
-  if (this.state.encrypted.length == 0) {
+  if (this.state.encrypted.length === 0) {
     const msgToEncrypt = {
       sender: this.state.sender,
       date: this.state.date,
@@ -125,6 +125,8 @@ function decryptMsg() {
 
       if (res.data.error) {
         this.setState({
+          sender: '',
+          date: '',
           unencrypted: res.data.error,
           active: false,
         });
@@ -141,6 +143,8 @@ function decryptMsg() {
       console.log('Error decrypting msg from backend ', err);
 
       this.setState({
+        sender: '',
+        date: '',
         unencrypted: 'Whoops, there was an error retrieving your message',
         active: false,
       });

@@ -76,12 +76,12 @@ class App extends Component {
         </Dialog>
 
         <section>
-        <Snackbar
-          active={this.state.showSnackbar}
-          label="You're message is missing something. Please fill out the form entirely."
-          timeout={3500}
-          onTimeout={handleSnackbarTimeout.bind(this)}
-        />
+          <Snackbar
+            active={this.state.showSnackbar}
+            label="You're message is missing something. Please fill out the form   entirely."
+            timeout={3500}
+            onTimeout={handleSnackbarTimeout.bind(this)}
+          />
         </section>
 
       </div>
