@@ -7,7 +7,7 @@ import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import Form from './components/form.jsx';
 
-const { generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarTimeout } = require('./utils.js');
+const { generatePassphrase, handleSender, handleMessage, handleDate, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarTimeout } = require('./utils.js');
 
 class App extends Component {
   constructor(props) {
