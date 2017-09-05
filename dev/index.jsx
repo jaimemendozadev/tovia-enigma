@@ -8,7 +8,7 @@ import styles from '../public/styles.css';
 import axios from 'axios';
 
 import Form from './components/form.jsx';
-const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleEncrypt, handleClose, decryptMsg, handleDialogInput, createNewPassphrase, handleSnackbarTimeout} = require('./utils.js');
+const {generatePassphrase, handleSender, handleMessage, handleDate, postMsg, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarTimeout} = require('./utils.js');
 
 class App extends Component {
   constructor(props){
@@ -49,7 +49,7 @@ class App extends Component {
           date={this.state.date}
           handleDate={handleDate.bind(this)}
           handleEncrypt={handleEncrypt.bind(this)}
-          decryptMsg={decryptMsg.bind(this)} 
+          decryptMsg={handleDecrypt.bind(this)} 
         />
 
         <div className="btn-container">
@@ -58,8 +58,6 @@ class App extends Component {
           <Link onClick={createNewPassphrase.bind(this)} href="#" label="Generate new Passphrase" />
 
         </div>
-
-
 
         <Dialog
           actions={actions}

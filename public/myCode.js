@@ -14614,6 +14614,7 @@ var _require = __webpack_require__(305),
     handleEncrypt = _require.handleEncrypt,
     handleClose = _require.handleClose,
     decryptMsg = _require.decryptMsg,
+    handleDecrypt = _require.handleDecrypt,
     handleDialogInput = _require.handleDialogInput,
     createNewPassphrase = _require.createNewPassphrase,
     handleSnackbarTimeout = _require.handleSnackbarTimeout;
@@ -14664,7 +14665,7 @@ var App = function (_Component) {
           date: this.state.date,
           handleDate: handleDate.bind(this),
           handleEncrypt: handleEncrypt.bind(this),
-          decryptMsg: decryptMsg.bind(this)
+          decryptMsg: handleDecrypt.bind(this)
         }),
         _react2.default.createElement(
           'div',
@@ -31797,6 +31798,13 @@ function decryptMsg() {
   });
 }
 
+function handleDecrypt() {
+  this.setState({
+    active: !this.state.active,
+    showDialog: ''
+  });
+}
+
 function handleDialogInput(dialog) {
   this.setState({
     showDialog: dialog
@@ -31834,6 +31842,7 @@ module.exports = {
   handleEncrypt: handleEncrypt,
   handleClose: handleClose,
   decryptMsg: decryptMsg,
+  handleDecrypt: handleDecrypt,
   handleDialogInput: handleDialogInput,
   createNewPassphrase: createNewPassphrase,
   handleSnackbarTimeout: handleSnackbarTimeout

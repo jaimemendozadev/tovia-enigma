@@ -129,6 +129,13 @@ function decryptMsg() {
     });
 }
 
+function handleDecrypt() {
+  this.setState({
+    active: !this.state.active,
+    showDialog: '',
+  });
+}
+
 function handleDialogInput(dialog) {
   this.setState({
     showDialog: dialog,
@@ -167,6 +174,7 @@ module.exports = {
   handleEncrypt,
   handleClose,
   decryptMsg,
+  handleDecrypt,
   handleDialogInput,
   createNewPassphrase,
   handleSnackbarTimeout,
