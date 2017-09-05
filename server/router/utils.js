@@ -22,8 +22,6 @@ const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
     inMemoryDB[passphrase].push(newMsg);
   }
 
-  console.log('db is ', inMemoryDB);
-
   return encrypted;
 };
 
@@ -31,31 +29,21 @@ const encryptAndSave = (sender, date, passphrase, msgToEncrypt) => {
 const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
   const currentDate = new Date();
 
-  // handle case where there's no array for passphrase passed
   const availableMsgs = inMemoryDB[passphrase];
-
-  console.log('availableMsgs is ', availableMsgs);
 
   if (availableMsgs === undefined) {
     return { error: 'Whoops, there was an error retrieving your message' };
   }
 
-
   let msgFound = false;
 
   availableMsgs.forEach((msg) => {
-    console.log('msg is ', msg);
-    console.log(`msgToDecrypt is ${msgToDecrypt}`);
-
     if (msg.encrypted === msgToDecrypt) {
       msgFound = msg;
     }
   });
 
   const notExpired = moment(currentDate).isBefore(msgFound.date);
-
-  console.log('The msgFound in DB is ', msgFound);
-  console.log('Not expired is ', notExpired);
 
   if (msgFound !== false && notExpired === true) {
     const bytes = CryptoJS.AES.decrypt(msgToDecrypt.toString(), passphrase);

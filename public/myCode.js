@@ -45733,8 +45733,6 @@ var generatePassphrase = function generatePassphrase() {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
-  console.log('The generated passphrase is ', text);
-
   return text;
 };
 
@@ -45795,8 +45793,6 @@ function handleEncrypt() {
     };
     var passphrase = this.state.passphrase;
 
-    console.log('expiration date is ', this.state.date);
-
     postMsg.call(this, passphrase, msgToEncrypt);
   } else {
     // we do have an encrypted message from server/DB
@@ -45810,8 +45806,6 @@ function handleEncrypt() {
 }
 
 function handleClose() {
-  console.log('Resetting the state after closing dialog');
-
   this.setState({
     sender: '',
     unencrypted: '',
@@ -45825,11 +45819,8 @@ function handleClose() {
 function decryptMsg() {
   var _this2 = this;
 
-  console.log('Inside handleDecrypt!');
   var msgToDecrypt = this.state.showDialog;
   var passphrase = this.state.passphrase;
-
-  console.log('msgToDecrypt is ' + msgToDecrypt + ' and passphrase is ' + passphrase);
 
   _axios2.default.post(url + '/decrypt/' + passphrase, { msgToDecrypt: msgToDecrypt }).then(function (res) {
     console.log('Msg successfully decrypted', res);
@@ -45876,8 +45867,6 @@ function handleDialogInput(dialog) {
 
 function createNewPassphrase(event) {
   event.preventDefault();
-
-  console.log('resetting the state');
 
   this.setState({
     sender: '',

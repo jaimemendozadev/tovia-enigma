@@ -20,8 +20,6 @@ const generatePassphrase = () => {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
-  console.log('The generated passphrase is ', text);
-
   return text;
 };
 
@@ -84,8 +82,6 @@ function handleEncrypt() {
     };
     const passphrase = this.state.passphrase;
 
-    console.log('expiration date is ', this.state.date);
-
     postMsg.call(this, passphrase, msgToEncrypt);
   } else {
     // we do have an encrypted message from server/DB
@@ -99,8 +95,6 @@ function handleEncrypt() {
 }
 
 function handleClose() {
-  console.log('Resetting the state after closing dialog');
-
   this.setState({
     sender: '',
     unencrypted: '',
@@ -112,12 +106,8 @@ function handleClose() {
 }
 
 function decryptMsg() {
-  console.log('Inside handleDecrypt!');
   const msgToDecrypt = this.state.showDialog;
   const passphrase = this.state.passphrase;
-
-  console.log(`msgToDecrypt is ${msgToDecrypt} and passphrase is ${passphrase}`);
-
 
   axios.post(`${url}/decrypt/${passphrase}`, { msgToDecrypt })
     .then((res) => {
@@ -167,8 +157,6 @@ function handleDialogInput(dialog) {
 
 function createNewPassphrase(event) {
   event.preventDefault();
-
-  console.log('resetting the state');
 
   this.setState({
     sender: '',
