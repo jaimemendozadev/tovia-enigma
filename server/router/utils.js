@@ -43,7 +43,8 @@ const retrieveAndDecrypt = (msgToDecrypt, passphrase) => {
     }
   });
 
-  const notExpired = moment(currentDate).isBefore(msgFound.date);
+  // moment checks by the second
+  const notExpired = moment(currentDate).isBefore(msgFound.date, 'second');
 
   if (msgFound !== false && notExpired === true) {
     const bytes = CryptoJS.AES.decrypt(msgToDecrypt.toString(), passphrase);
