@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Snackbar } from 'react-toolbox';
 import Input from 'react-toolbox/lib/input';
 import Link from 'react-toolbox/lib/link';
 import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import Form from './components/form.jsx';
+import SnackbarSection from './components/snackbarsection.jsx';
 
 const { generatePassphrase, handleSender, handleMessage, handleDate, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarFormTimeout, handleSnackbarDateTimeout } = require('./utils.js');
 
@@ -90,22 +90,12 @@ class App extends Component {
 
         </Dialog>
 
-        <section>
-          <Snackbar
-            active={this.state.showFormSnackbar}
-            label="You're message is missing something. Please fill out the form   entirely."
-            timeout={3500}
-            onTimeout={this.handleSnackbarFormTimeout}
-          />
-
-          <Snackbar
-            active={this.state.showDateSnackbar}
-            label="You cannot set an expiration date on or before before today's date. Please try again."
-            timeout={3500}
-            onTimeout={this.handleSnackbarDateTimeout}
-          />
-        </section>
-
+        <SnackbarSection
+          showFormSnackbar={this.state.showFormSnackbar}
+          handleSnackbarFormTimeout={this.handleSnackbarFormTimeout}
+          showDateSnackbar={this.state.showDateSnackbar}
+          handleSnackbarDateTimeout={this.handleSnackbarDateTimeout}
+        />
       </div>
     );
   }

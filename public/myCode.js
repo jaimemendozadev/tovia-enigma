@@ -20365,8 +20365,6 @@ var _reactDom = __webpack_require__(32);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactToolbox = __webpack_require__(332);
-
 var _input = __webpack_require__(36);
 
 var _input2 = _interopRequireDefault(_input);
@@ -20386,6 +20384,10 @@ var _styles2 = _interopRequireDefault(_styles);
 var _form = __webpack_require__(517);
 
 var _form2 = _interopRequireDefault(_form);
+
+var _snackbarsection = __webpack_require__(657);
+
+var _snackbarsection2 = _interopRequireDefault(_snackbarsection);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20494,22 +20496,12 @@ var App = function (_Component) {
             onChange: this.handleDialogInput
           })
         ),
-        _react2.default.createElement(
-          'section',
-          null,
-          _react2.default.createElement(_reactToolbox.Snackbar, {
-            active: this.state.showFormSnackbar,
-            label: 'You\'re message is missing something. Please fill out the form   entirely.',
-            timeout: 3500,
-            onTimeout: this.handleSnackbarFormTimeout
-          }),
-          _react2.default.createElement(_reactToolbox.Snackbar, {
-            active: this.state.showDateSnackbar,
-            label: 'You cannot set an expiration date on or before before today\'s date. Please try again.',
-            timeout: 3500,
-            onTimeout: this.handleSnackbarDateTimeout
-          })
-        )
+        _react2.default.createElement(_snackbarsection2.default, {
+          showFormSnackbar: this.state.showFormSnackbar,
+          handleSnackbarFormTimeout: this.handleSnackbarFormTimeout,
+          showDateSnackbar: this.state.showDateSnackbar,
+          handleSnackbarDateTimeout: this.handleSnackbarDateTimeout
+        })
       );
     }
   }]);
@@ -45805,7 +45797,7 @@ function postMsg(passphrase, msgToEncrypt) {
 function handleEncrypt() {
   if (this.state.sender.length === 0 || !this.state.date || this.state.unencrypted.length === 0) {
     this.setState({
-      showSnackbar: true
+      showFormSnackbar: true
     });
     return;
   }
@@ -62636,6 +62628,58 @@ webpackContext.keys = function webpackContextKeys() {
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
 webpackContext.id = 655;
+
+/***/ }),
+/* 656 */,
+/* 657 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactToolbox = __webpack_require__(332);
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SnackbarSection = function SnackbarSection(props) {
+  return _react2.default.createElement(
+    'section',
+    null,
+    _react2.default.createElement(_reactToolbox.Snackbar, {
+      active: props.showFormSnackbar,
+      label: 'You\'re message is missing something. Please fill out the form   entirely.',
+      timeout: 3500,
+      onTimeout: props.handleSnackbarFormTimeout
+    }),
+    _react2.default.createElement(_reactToolbox.Snackbar, {
+      active: props.showDateSnackbar,
+      label: 'You cannot set an expiration date on or before before today\'s date. Please try again.',
+      timeout: 3500,
+      onTimeout: props.handleSnackbarDateTimeout
+    })
+  );
+};
+
+SnackbarSection.propTypes = {
+  showFormSnackbar: _propTypes2.default.bool.isRequired,
+  handleSnackbarFormTimeout: _propTypes2.default.func.isRequired,
+  showDateSnackbar: _propTypes2.default.bool.isRequired,
+  handleSnackbarDateTimeout: _propTypes2.default.func.isRequired
+};
+
+exports.default = SnackbarSection;
 
 /***/ })
 /******/ ]);

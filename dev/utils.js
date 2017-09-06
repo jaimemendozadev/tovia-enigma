@@ -78,7 +78,7 @@ function postMsg(passphrase, msgToEncrypt) {
 function handleEncrypt() {
   if (this.state.sender.length === 0 || !this.state.date || this.state.unencrypted.length === 0) {
     this.setState({
-      showSnackbar: true,
+      showFormSnackbar: true,
     });
     return;
   }
