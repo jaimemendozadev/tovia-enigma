@@ -1,6 +1,6 @@
 # [Tovia's Enigma](https://github.com/jaimemendozadev/tovia-enigma)
 
-Tovia's Enigma is a simple Single Page Application that lets users create an encrypted message with an expiration date by using a random generated passphrase. With the magic of cryptography and our random passphrase, we take your message contents and the expiration date for safekeeping, and wait until the right person with the correct passphrase comes along to decrypt your secret message! Our app is so simple to use, members of the clandestine services might even use our app to store sensitive info! 
+Tovia's Enigma is a simple Single Page Application that lets users create an encrypted message with an expiration date by using a random generated passphrase. With the magic of cryptography and our random passphrase, we take your message contents and the expiration date for safekeeping, and wait until the right person with the correct passphrase comes along to decrypt your secret message! Our app is so simple to use, members of the clandestine services might even use our app to store sensitive info! :see_no_evil: :wink: :smiling_imp:
 
 
 ## Table of contents
@@ -17,7 +17,7 @@ Open up your terminal and clone the repo locally to your computer by running the
 
 ## Create a `.env` File
 
-This step is actually optional since we're not storing any private keys, only the port number. But if you'd like, here's how to crate the `.env`.
+This step is actually optional since we're not storing any private keys, only the port number. But if you'd like, here's how to create the `.env` file.
 
 Fire up your terminal and in the root of the app directory, create a new `.env` file by simply running `$ touch .env`. 
 
@@ -38,7 +38,7 @@ In the root of the app, use your terminal to run `$ npm install` to install all 
 
 Open a second tab in your terminal and run the command `$ npm run build` to build all the React components. Watch the terminal and wait until all the components finish building.
 
-For local development, go to the `/dev/utils.js` and uncomment line 4, comment line 5. Line 5 with the `/api` path should only be uncommented when running the project in production.
+For local development, go to the `/dev/utils.js` file and uncomment line 4, comment line 5. Line 5 with the `/api` path should only be uncommented when running the project in production.
 
 Finally in the first terminal tab, or in another opened terminal tab, run the command `$ npm start` to start the app.
 
@@ -57,7 +57,9 @@ Two things to keep in mind:
 
 1) Once you've encrypted a message, quickly save it somewhere. Otherwise you may not be able to decrypt the message later.
 
-2) Notice at the bottom of the form, it will show the currently used Passphrase for encrypting messages. If you change the passphrase... well... that message you originally encrypted with the old Passphrase... consider it permanetly deleted. Sorry. 
+2) Notice at the bottom of the form, it will show the currently used Passphrase for encrypting messages. If you change the passphrase by clicking the `Generate New Passphrase` button or if you refresh the page... well... that message you originally encrypted with the old Passphrase... consider it permanetly deleted. :collison: :fire: :scream: Sorry. :grin: :innocent: 
+
+Checkout the live version on [Heroku](https://tovia-enigma.herokuapp.com/)!
 
 
 ## Created By
