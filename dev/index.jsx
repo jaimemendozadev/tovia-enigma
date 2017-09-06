@@ -7,7 +7,7 @@ import Dialog from 'react-toolbox/lib/dialog';
 import styles from '../public/styles.css';
 import Form from './components/form.jsx';
 
-const { generatePassphrase, handleSender, handleMessage, handleDate, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarTimeout } = require('./utils.js');
+const { generatePassphrase, handleSender, handleMessage, handleDate, handleEncrypt, handleClose, decryptMsg, handleDecrypt, handleDialogInput, createNewPassphrase, handleSnackbarFormTimeout, handleSnackbarDateTimeout } = require('./utils.js');
 
 class App extends Component {
   constructor(props) {
@@ -20,7 +20,8 @@ class App extends Component {
       passphrase: '',
       active: false,
       showDialog: '',
-      showSnackbar: false,
+      showFormSnackbar: false,
+      showDateSnackbar: false,
     };
 
     this.handleClose = handleClose.bind(this);
@@ -32,7 +33,9 @@ class App extends Component {
     this.handleDecrypt = handleDecrypt.bind(this);
     this.createNewPassphrase = createNewPassphrase.bind(this);
     this.handleDialogInput = handleDialogInput.bind(this);
-    this.handleSnackbarTimeout = handleSnackbarTimeout.bind(this);
+
+    this.handleSnackbarFormTimeout = handleSnackbarFormTimeout.bind(this);
+    this.handleSnackbarDateTimeout = handleSnackbarDateTimeout.bind(this);
   }
 
   componentDidMount() {
@@ -55,8 +58,10 @@ class App extends Component {
           handleSender={this.handleSender}
           unencrypted={this.state.unencrypted}
           handleMessage={this.handleMessage}
+
           date={this.state.date}
           handleDate={this.handleDate}
+
           handleEncrypt={this.handleEncrypt}
           decryptMsg={this.handleDecrypt}
         />
@@ -87,10 +92,17 @@ class App extends Component {
 
         <section>
           <Snackbar
-            active={this.state.showSnackbar}
+            active={this.state.showFormSnackbar}
             label="You're message is missing something. Please fill out the form   entirely."
             timeout={3500}
-            onTimeout={this.handleSnackbarTimeout}
+            onTimeout={this.handleSnackbarFormTimeout}
+          />
+
+          <Snackbar
+            active={this.state.showDateSnackbar}
+            label="You cannot set an expiration date on or before before today's date. Please try again."
+            timeout={3500}
+            onTimeout={this.handleSnackbarDateTimeout}
           />
         </section>
 

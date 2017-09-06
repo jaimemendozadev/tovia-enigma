@@ -1,6 +1,8 @@
 import axios from 'axios';
+import moment from 'moment';
 
-const url = 'http://localhost:3000/api';
+// const url = 'http://localhost:3000/api'; //use this for local development
+const url = '/api';
 
 const capitalize = () => {
   let text = '';
@@ -36,9 +38,17 @@ function handleMessage(msg) {
 }
 
 function handleDate(date) {
-  this.setState({
-    date,
-  });
+  const currentDate = new Date();
+
+  if (moment(date).isBefore(currentDate, 'second')) {
+    this.setState({
+      showDateSnackbar: true,
+    });
+  } else {
+    this.setState({
+      date,
+    });
+  }
 }
 
 
@@ -169,9 +179,15 @@ function createNewPassphrase(event) {
   });
 }
 
-function handleSnackbarTimeout() {
+function handleSnackbarFormTimeout() {
   this.setState({
-    showSnackbar: false,
+    showFormSnackbar: false,
+  });
+}
+
+function handleSnackbarDateTimeout() {
+  this.setState({
+    showDateSnackbar: false,
   });
 }
 
@@ -187,5 +203,6 @@ module.exports = {
   handleDecrypt,
   handleDialogInput,
   createNewPassphrase,
-  handleSnackbarTimeout,
+  handleSnackbarFormTimeout,
+  handleSnackbarDateTimeout,
 };
