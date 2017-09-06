@@ -17,6 +17,14 @@ form {
   margin: 2.5em auto;
 }
 
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+
+
+/* Note: Inline component styling is more effective than using stylesheet */
+
 
 
 

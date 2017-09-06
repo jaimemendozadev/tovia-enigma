@@ -20426,6 +20426,7 @@ var App = function (_Component) {
       showDialog: '',
       showSnackbar: false
     };
+
     _this.handleClose = handleClose.bind(_this);
     _this.decryptMsg = decryptMsg.bind(_this);
     _this.handleSender = handleSender.bind(_this);
@@ -20469,7 +20470,7 @@ var App = function (_Component) {
           'div',
           { className: 'btn-container' },
           _react2.default.createElement(_link2.default, { href: '#', label: 'Your passphrase - ' + this.state.passphrase }),
-          _react2.default.createElement(_link2.default, { onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
+          _react2.default.createElement(_link2.default, { style: { marginTop: '1em' }, onClick: this.createNewPassphrase, href: '#', label: 'Generate new Passphrase' })
         ),
         _react2.default.createElement(
           _dialog2.default,
@@ -45592,7 +45593,7 @@ exports = module.exports = __webpack_require__(9)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  width: 500px;\n}\n\nform {\n  width: 350px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n.styles__btn-container___2BKAR{\n  margin: 2.5em auto;\n}\n\n\n\n\n", ""]);
+exports.push([module.i, "* {\n  font-family: 'Roboto', sans-serif;\n}\n\n.styles__container___9gEbs {\n  width: 500px;\n}\n\nform {\n  width: 350px;\n  margin: 2em auto;\n  padding: 1em;\n  border: 1px solid grey;\n}\n\n.styles__btn-container___2BKAR{\n  margin: 2.5em auto;\n}\n\na:link, a:visited, a:hover, a:active {\n  text-decoration: none;\n}\n\n\n\n/* Note: Inline component styling is more effective than using stylesheet */\n\n\n\n\n", ""]);
 
 // exports
 exports.locals = {

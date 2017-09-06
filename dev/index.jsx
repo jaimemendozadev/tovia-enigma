@@ -22,6 +22,7 @@ class App extends Component {
       showDialog: '',
       showSnackbar: false,
     };
+
     this.handleClose = handleClose.bind(this);
     this.decryptMsg = decryptMsg.bind(this);
     this.handleSender = handleSender.bind(this);
@@ -63,7 +64,8 @@ class App extends Component {
         <div className="btn-container">
 
           <Link href="#" label={`Your passphrase - ${this.state.passphrase}`} />
-          <Link onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
+
+          <Link style={{ marginTop: '1em' }} onClick={this.createNewPassphrase} href="#" label="Generate new Passphrase" />
 
         </div>
 
